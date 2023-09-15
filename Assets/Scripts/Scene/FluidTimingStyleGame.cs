@@ -4,9 +4,10 @@ public class FluidTimingStyleGame : TimingStyleGame
 {
     [SerializeField] private GameObject particle;
     private float deltaTime;
+    
     protected override void StartGame()
     {
-        
+        base.StartGame();
     }
 
     protected override void FinishGame()
@@ -21,14 +22,17 @@ public class FluidTimingStyleGame : TimingStyleGame
 
     protected override bool UpdateGame()
     {
-        deltaTime += Time.deltaTime;
-        if (deltaTime > 0.01f)
+        if (isPlaying)
         {
-            SpawnParticle();
-            SpawnParticle();
-            deltaTime -= 0.01f;
+            deltaTime += Time.deltaTime;
+            if (deltaTime > 0.01f)
+            {
+                SpawnParticle();
+                SpawnParticle();
+                deltaTime -= 0.01f;
+            }
         }
-        
+
         return base.UpdateGame();
     }
 
@@ -40,4 +44,9 @@ public class FluidTimingStyleGame : TimingStyleGame
         obj.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
         obj.SetActive(true);
     }
+}
+
+public class MatchingTimingStyleGame : TimingStyleGame
+{
+    
 }

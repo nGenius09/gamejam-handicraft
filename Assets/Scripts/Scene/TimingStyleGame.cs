@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class TimingStyleGame : BaseGame
 {
-    private float destinationTime;
+    [SerializeField] private float destinationTime;
+    protected bool isPlaying;
     protected override void StartGame()
     {
-        
+        isPlaying = true;
     }
 
     protected override void FinishGame()
@@ -21,16 +22,16 @@ public class TimingStyleGame : BaseGame
 
     protected override bool UpdateGame()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isPlaying && Input.GetKeyDown(KeyCode.Space))
         {
-            CheckTiming();
+            StopAndCheckTiming();
         }
         
         return true;
     }
 
-    protected virtual void CheckTiming()
+    protected virtual void StopAndCheckTiming()
     {
-        
+        isPlaying = false;
     }
 }
