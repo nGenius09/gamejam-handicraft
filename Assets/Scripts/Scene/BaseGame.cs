@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public abstract class BaseGame : MonoBehaviour
 {
     [FormerlySerializedAs("gameName")] [SerializeField] private GameManager.GameMode gameMode;
-    [SerializeField] private Button finishBtn;
-
+    private float gameTime;
+    
     protected abstract void StartGame();
     protected abstract void FinishGame();
     protected abstract int GetResult();
@@ -20,9 +20,14 @@ public abstract class BaseGame : MonoBehaviour
 
     private void Update()
     {
+        gameTime += Time.deltaTime;
+        
         UpdateGame();
     }
     
+    /// <summary>
+    /// For Test
+    /// </summary>
     public void OnClickFinish()
     {
         GameManager.Instance.FinishGame(gameMode);

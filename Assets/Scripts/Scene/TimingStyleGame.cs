@@ -1,8 +1,12 @@
+using System;
+using UnityEngine;
+
 public class TimingStyleGame : BaseGame
 {
+    private float destinationTime;
     protected override void StartGame()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     protected override void FinishGame()
@@ -17,6 +21,16 @@ public class TimingStyleGame : BaseGame
 
     protected override bool UpdateGame()
     {
-        throw new System.NotImplementedException();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CheckTiming();
+        }
+        
+        return true;
+    }
+
+    protected virtual void CheckTiming()
+    {
+        
     }
 }
