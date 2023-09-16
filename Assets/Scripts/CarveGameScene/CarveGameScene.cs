@@ -1,19 +1,13 @@
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using TMPro;
 using UniRx;
 using UniRx.Triggers;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class CarveGameScene : MonoBehaviour
+public class CarveGameScene : BaseGame
 {
     private readonly StringBuilder _startconsonant = new StringBuilder("ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ");
     private readonly StringBuilder _vowel = new StringBuilder("ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ");
@@ -40,21 +34,19 @@ public class CarveGameScene : MonoBehaviour
     [SerializeField]
     private AreaPooling _area;
 
-    [SerializeField]
-    private UnityEngine.UI.Slider _timeLimit;
+    [SerializeField] private TimeBar timeBar;
 
     private CancellationTokenSource _cts = new CancellationTokenSource();
-
-    public float time = 60;
-
-    private void Start()
+    
+    protected override void StartGame()
     {
+        base.StartGame();
+        
         Divide_Letter(new StringBuilder("씌쑤뺴쨔꼐뛰"));
-        CheckDupllicate(20, 4);
+        CheckDuplicate(20, 4);
         _appearLetterSearchChar.Clear();
         MakeKeyCodeNCharTable();
-        _timeLimit.maxValue = time;
-
+        
         StringBuilder str = new StringBuilder(5);
 
         for (int i = 0; i < 5; ++i)
@@ -63,31 +55,44 @@ public class CarveGameScene : MonoBehaviour
         _area.Init(str.ToString());
 
         this.UpdateAsObservable().Subscribe(_ => CheckInput());
-        TickTime().Forget();
+        //TickTime().Forget();
     }
 
-    private async UniTaskVoid TickTime()
+    protected override void FinishGame()
     {
-        while (time > 0)
-        {
-            //�ɼ�â active����?
-            await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
-            time -= Time.deltaTime;
-            _timeLimit.value = time;
-        }
+        base.FinishGame();
+        
+        Clear();
+    }
+    
+    protected override bool UpdateGame()
+    {
+        timeBar.SetFillAmount(1 - gameTime / limitTime);
+        return true;
     }
 
-    private async UniTaskVoid ShakeSlider(float time = 0.5f, float amount = 10)
+    // private async UniTaskVoid TickTime()
+    // {
+    //     while (time > 0)
+    //     {
+    //         //�ɼ�â active����?
+    //         await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
+    //         time -= Time.deltaTime;
+    //         _timeLimit.value = time;
+    //     }
+    // }
+
+    private async UniTaskVoid ShakeSlider(float time = 0.3f, float amount = 0.1f)
     {
-        RectTransform t = _timeLimit.GetComponent<RectTransform>();
-        Vector2 startpos = t.anchoredPosition;
+        Transform t = timeBar.GetComponent<Transform>();
+        Vector2 startpos = t.position;
         Debug.Log(startpos);
         while (time > 0.0f)
         {
-            t.anchoredPosition = startpos + new Vector2(UnityEngine.Random.Range(-amount, amount),
+            t.position = startpos + new Vector2(UnityEngine.Random.Range(-amount, amount),
                 UnityEngine.Random.Range(-amount, amount));
             await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
-            t.anchoredPosition = startpos;
+            t.position = startpos;
             time -= Time.deltaTime;
         }
     }
@@ -125,7 +130,7 @@ public class CarveGameScene : MonoBehaviour
                 else
                 {
                     ShakeSlider().Forget();
-                    time -= 5;
+                    SetTime(gameTime - 5);
                     Debug.Log($"input is {_keyCodeNCharPair[key]} curLetter is {_nonDuplicateString[_stringPointer]}, Fail");
                     //����!
                 }
@@ -133,7 +138,7 @@ public class CarveGameScene : MonoBehaviour
         }
     }
 
-    private void CheckDupllicate(int letterLen, int typeCount)
+    private void CheckDuplicate(int letterLen, int typeCount)
     {
         _nonDuplicateString = new StringBuilder(letterLen);
         StringBuilder temp = new StringBuilder(_appearLetterSearchChar.Count);

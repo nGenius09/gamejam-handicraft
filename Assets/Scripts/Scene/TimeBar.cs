@@ -9,7 +9,7 @@ public class TimeBar : MonoBehaviour
     public void SetFillAmount(float rate)
     {
         var size = gauge.size;
-        size.x = Mathf.Clamp(rate, min, max);
+        size.x = rate * (max - min) + min;
         gauge.size = size;
     }
 }
