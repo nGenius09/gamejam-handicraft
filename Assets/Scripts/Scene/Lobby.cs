@@ -7,7 +7,7 @@ public class Lobby : MonoBehaviour
 {
     [SerializeField] private Button startBtn;
     [SerializeField] private Button collectionBtn;
-    [SerializeField] private GameObject settingPopup;
+    [SerializeField] private SettingPopup settingPopup;
 
     private void Awake()
     {
@@ -45,6 +45,6 @@ public class Lobby : MonoBehaviour
 
     public void OnClickSetting()
     {
-        settingPopup.SetActive(true);
+        settingPopup.Show();
     }
 }

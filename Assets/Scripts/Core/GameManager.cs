@@ -25,10 +25,7 @@ public class GameManager
         OnUpdateTime = null;
     }
     
-    /// <summary>
-    /// For Test
-    /// </summary>
-    public void LoadIntro()
+    public void ResetAll()
     {
         SceneManager.LoadScene("0.Intro");
         CurrentMode = GameMode.None;
