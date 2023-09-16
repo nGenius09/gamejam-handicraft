@@ -9,6 +9,8 @@ public class Lobby : MonoBehaviour
     [SerializeField] private FailPopup failPopup;
     [SerializeField] private AchievementPopup achievementPopup;
     [SerializeField] private CollectionPopup collectionPopup;
+    
+    [SerializeField] private GameObject[] collectionObjects;
 
     private void Awake()
     {
@@ -21,6 +23,8 @@ public class Lobby : MonoBehaviour
         GameManager.Instance.SetStartGameHandler(OnStartGame);
         GameManager.Instance.SetUpdateTimeHandler(OnUpdateTime);
         GameManager.Instance.SetFinishGameHandler(OnFinishGame);
+        
+        RefreshCollectionObjects();
     }
 
     private void OnStartGame()
@@ -42,6 +46,7 @@ public class Lobby : MonoBehaviour
                 successPopup.Show(() =>
                 {
                     GameManager.Instance.FinishGame(current, GameManager.GameMode.None);
+                    RefreshCollectionObjects();
                 });
             }
             else
@@ -55,6 +60,15 @@ public class Lobby : MonoBehaviour
             {
                 GameManager.Instance.FinishGame(current, GameManager.GameMode.None);
             });
+        }
+    }
+
+    private void RefreshCollectionObjects()
+    {
+        var collections = AccountManager.Instance.collections;
+        for (int i = 0; i < this.collectionObjects.Length; i++)
+        {
+            this.collectionObjects[i].SetActive(i < collections.Count);
         }
     }
 

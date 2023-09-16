@@ -1,18 +1,23 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class SuccessPopup : FinishActionPopup
 {
-    [SerializeField] private GameObject[] results;
+    [SerializeField] private SpriteAtlas atlas;
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI comment;
 
     public override void Show()
     {
         base.Show();
 
-        var resultIndex = Random.Range(0, results.Length);
+        var id = Random.Range(1, 6);
 
-        for (int i = 0; i < results.Length; i++)
-        {
-            results[i].SetActive(i == resultIndex);
-        }
+        image.sprite = atlas.GetSprite($"Result{id}");
+        comment.text = $"{id}";
+        
+        AccountManager.Instance.AddCollection(id);
     }
 }

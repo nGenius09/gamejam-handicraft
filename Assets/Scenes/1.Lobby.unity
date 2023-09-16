@@ -6930,12 +6930,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6824080efd9642cdbab15733ca06b68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  results:
-  - {fileID: 2068229693}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  atlas: {fileID: 100100200, guid: 62dff3285072d4882ad534be362363d7, type: 3}
+  image: {fileID: 2068229695}
+  comment: {fileID: 914482990}
 --- !u!114 &1275435521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7350,6 +7347,13 @@ MonoBehaviour:
   failPopup: {fileID: 1964452991}
   achievementPopup: {fileID: 1718028863}
   collectionPopup: {fileID: 1151656655}
+  collectionObjects:
+  - {fileID: 2023156635}
+  - {fileID: 188753562}
+  - {fileID: 1276612590}
+  - {fileID: 1867936288}
+  - {fileID: 1985689397}
+  - {fileID: 1393721414}
 --- !u!4 &1352570563
 Transform:
   m_ObjectHideFlags: 0
