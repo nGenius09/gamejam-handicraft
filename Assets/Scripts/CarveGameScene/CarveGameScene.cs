@@ -106,18 +106,24 @@ public class CarveGameScene : BaseGame
         //스코어
         int Score = (int)(limitTime - gameTime - _wrongCount + _feverCount);
         Clear();
-        if (!bSuccess)
-        {
-            _failImg.gameObject.SetActive(true);
-        }
+        // if (!bSuccess)
+        // {
+        //     _failImg.gameObject.SetActive(true);
+        // }
 
         base.FinishGame(bSuccess);
     }
-    
+
+    protected override int GetResult()
+    {
+        int Score = (int)(limitTime - gameTime - _wrongCount + _feverCount);
+        return Score;
+    }
+
     protected override bool UpdateGame()
     {
         timeBar.SetFillAmount(1 - gameTime / limitTime);
-        return true;
+        return base.UpdateGame();
     }
 
     // private async UniTaskVoid TickTime()

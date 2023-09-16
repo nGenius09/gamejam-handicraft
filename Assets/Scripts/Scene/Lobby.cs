@@ -1,16 +1,18 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour
 {
-    [SerializeField] private Button startBtn;
-    [SerializeField] private Button collectionBtn;
     [SerializeField] private SettingPopup settingPopup;
+    [SerializeField] private SuccessPopup successPopup;
+    [SerializeField] private FailPopup failPopup;
 
     private void Awake()
     {
+        settingPopup.gameObject.SetActive(false);
+        successPopup.gameObject.SetActive(false);
+        failPopup.gameObject.SetActive(false);
+        
         GameManager.Instance.SetStartGameHandler(OnStartGame);
         GameManager.Instance.SetUpdateTimeHandler(OnUpdateTime);
         GameManager.Instance.SetFinishGameHandler(OnFinishGame);
@@ -26,9 +28,29 @@ public class Lobby : MonoBehaviour
         
     }
     
-    private void OnFinishGame()
+    private void OnFinishGame(bool bSuccess, GameManager.GameMode current, GameManager.GameMode next)
     {
-        
+        if (bSuccess)
+        {
+            if (current.IsFinalMode())
+            {
+                successPopup.Show(() =>
+                {
+                    GameManager.Instance.FinishGame(current, GameManager.GameMode.None);
+                });
+            }
+            else
+            {
+                GameManager.Instance.FinishGame(current, next);
+            }
+        }
+        else
+        {
+            failPopup.Show(() =>
+            {
+                GameManager.Instance.FinishGame(current, GameManager.GameMode.None);
+            });
+        }
     }
 
     private void Update()
