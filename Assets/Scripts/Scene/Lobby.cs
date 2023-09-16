@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Lobby : MonoBehaviour
@@ -10,7 +11,9 @@ public class Lobby : MonoBehaviour
     [SerializeField] private AchievementPopup achievementPopup;
     [SerializeField] private CollectionPopup collectionPopup;
     
+    [SerializeField] private GameObject[] achievementObjects;
     [SerializeField] private GameObject[] collectionObjects;
+    [SerializeField] private TextMeshProUGUI collectionCount;
 
     private void Awake()
     {
@@ -24,7 +27,7 @@ public class Lobby : MonoBehaviour
         GameManager.Instance.SetUpdateTimeHandler(OnUpdateTime);
         GameManager.Instance.SetFinishGameHandler(OnFinishGame);
         
-        RefreshCollectionObjects();
+        RefreshRewardObjects();
     }
 
     private void OnStartGame()
@@ -46,7 +49,7 @@ public class Lobby : MonoBehaviour
                 successPopup.Show(() =>
                 {
                     GameManager.Instance.FinishGame(current, GameManager.GameMode.None);
-                    RefreshCollectionObjects();
+                    RefreshRewardObjects();
                 });
             }
             else
@@ -63,13 +66,21 @@ public class Lobby : MonoBehaviour
         }
     }
 
-    private void RefreshCollectionObjects()
+    private void RefreshRewardObjects()
     {
+        var achievements = AccountManager.Instance.achievements;
+        for (int i = 0; i < this.achievementObjects.Length; i++)
+        {
+            this.achievementObjects[i].SetActive(i < achievements.Count);
+        }
+        
         var collections = AccountManager.Instance.collections;
         for (int i = 0; i < this.collectionObjects.Length; i++)
         {
             this.collectionObjects[i].SetActive(i < collections.Count);
         }
+
+        collectionCount.text = $"{collections.Count}/6";
     }
 
     private void Update()
