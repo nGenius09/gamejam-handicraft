@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Lobby : MonoBehaviour
@@ -6,16 +8,26 @@ public class Lobby : MonoBehaviour
     [SerializeField] private SettingPopup settingPopup;
     [SerializeField] private SuccessPopup successPopup;
     [SerializeField] private FailPopup failPopup;
+    [SerializeField] private AchievementPopup achievementPopup;
+    [SerializeField] private CollectionPopup collectionPopup;
+    
+    [SerializeField] private GameObject[] achievementObjects;
+    [SerializeField] private GameObject[] collectionObjects;
+    [SerializeField] private TextMeshProUGUI collectionCount;
 
     private void Awake()
     {
         settingPopup.gameObject.SetActive(false);
         successPopup.gameObject.SetActive(false);
         failPopup.gameObject.SetActive(false);
+        achievementPopup.gameObject.SetActive(false);
+        collectionPopup.gameObject.SetActive(false);
         
         GameManager.Instance.SetStartGameHandler(OnStartGame);
         GameManager.Instance.SetUpdateTimeHandler(OnUpdateTime);
         GameManager.Instance.SetFinishGameHandler(OnFinishGame);
+        
+        RefreshRewardObjects();
     }
 
     private void OnStartGame()
@@ -37,6 +49,7 @@ public class Lobby : MonoBehaviour
                 successPopup.Show(() =>
                 {
                     GameManager.Instance.FinishGame(current, GameManager.GameMode.None);
+                    RefreshRewardObjects();
                 });
             }
             else
@@ -53,6 +66,23 @@ public class Lobby : MonoBehaviour
         }
     }
 
+    private void RefreshRewardObjects()
+    {
+        var achievements = AccountManager.Instance.achievements;
+        for (int i = 0; i < this.achievementObjects.Length; i++)
+        {
+            this.achievementObjects[i].SetActive(i < achievements.Count);
+        }
+        
+        var collections = AccountManager.Instance.collections;
+        for (int i = 0; i < this.collectionObjects.Length; i++)
+        {
+            this.collectionObjects[i].SetActive(i < collections.Count);
+        }
+
+        collectionCount.text = $"{collections.Count}/6";
+    }
+
     private void Update()
     {
         // var isOpen = SceneManager.sceneCount > 1;
@@ -61,6 +91,17 @@ public class Lobby : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            var list = new List<BasePopup>(){successPopup, failPopup, achievementPopup, collectionPopup};
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].IsActive())
+                {
+                    list[i].OnClickClose();
+                    return;
+                }
+            }
+            
             if (!settingPopup.IsActive())
             {
                 settingPopup.Show();
@@ -79,12 +120,12 @@ public class Lobby : MonoBehaviour
 
     public void OnClickCollection()
     {
-        
+        collectionPopup.Show();
     }
 
     public void OnClickAchievement()
     {
-        
+        achievementPopup.Show();
     }
 
     public void OnClickSetting()
