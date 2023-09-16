@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class SettingPopup : BasePopup
 {
     [SerializeField] private SettingResetPopup settingResetPopup;
+    [SerializeField] private SettingExitPopup settingExitPopup;
     public void OnBGMValueChanged(Slider slider)
     {
         
@@ -19,6 +20,11 @@ public class SettingPopup : BasePopup
         settingResetPopup.Show();
     }
 
+    public void OnClickExit()
+    {
+        settingExitPopup.Show();
+    }
+
     public override void Show()
     {
         base.Show();
@@ -28,6 +34,18 @@ public class SettingPopup : BasePopup
 
     public override void OnClickClose()
     {
+        if (settingResetPopup.IsActive())
+        {
+            settingResetPopup.OnClickClose();
+            return;
+        }
+
+        if (settingExitPopup.IsActive())
+        {
+            settingExitPopup.OnClickClose();
+            return;
+        }
+        
         base.OnClickClose();
 
         Time.timeScale = 1;
