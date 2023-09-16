@@ -77,7 +77,8 @@ public class CarveGameScene : BaseGame
                 .AppendCallback(() => _fever.gameObject.SetActive(true))
                 .Append(_feverRect.DOScale(new Vector3(1.2f, 1.2f, 1), 0.25f))
                 .Join(_fever.DOColor(Color.white, 0.25f))
-                .SetAutoKill(false);
+                .SetAutoKill(false)
+                .Pause();
 
         StringBuilder str = new StringBuilder(5);
 
@@ -187,6 +188,12 @@ public class CarveGameScene : BaseGame
                     ++_stringPointer;
                     ++_combo;
                     _curComboTime = ComboTime;
+                    
+                    if (_combo == 10)
+                    {
+                        FeverEffect(true);
+                    }
+
                     _block.SetBlock(_stringPointer);
                     _comboText.GetInput(_combo);
 
@@ -213,6 +220,7 @@ public class CarveGameScene : BaseGame
                     _combo = 0;
                     _comboText.GetInput(_combo);
                     ++_wrongCount;
+                    FeverEffect(false);
                     Debug.Log($"input is {_keyCodeNCharPair[key]} curLetter is {_nonDuplicateString[_stringPointer]}, Fail");
                     //����!
                 }

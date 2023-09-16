@@ -3936,7 +3936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1662993588}
-  _keepTime: 1
+  _keepTime: 2
   _curtime: 1
 --- !u!114 &1662993588
 MonoBehaviour:
@@ -4691,8 +4691,9 @@ MonoBehaviour:
   _block: {fileID: 714434660}
   _comboText: {fileID: 1662993587}
   _failImg: {fileID: 1937374895}
-  _fever: {fileID: 0}
-  ComboTime: 1
+  _fever: {fileID: 1501249364}
+  _feverRect: {fileID: 898627336}
+  ComboTime: 2
   timeBar: {fileID: 2073976305}
 --- !u!212 &1871916641
 SpriteRenderer:
