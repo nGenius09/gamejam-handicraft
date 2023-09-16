@@ -1,29 +1,44 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FluidTimingStyleGame : TimingStyleGame
 {
     [SerializeField] private GameObject particle;
+    [SerializeField] private Transform lineMin;
+    [SerializeField] private Transform lineMax;
+    
+    [SerializeField] private float lineMinY;
+    [SerializeField] private float lineMaxY;
+    
+    [SerializeField] private int minPercent;
+    [SerializeField] private int maxPercent;
+    [SerializeField] private int particleMax;
+    
     private float deltaTime;
     private float speed = 1f;
-    
+    private List<GameObject> particles = new List<GameObject>();
+
     protected override void StartGame()
     {
         base.StartGame();
-    }
 
-    protected override void FinishGame(bool bSuccess = true)
-    {
-        base.FinishGame();
+        var posMin = lineMin.localPosition;
+        posMin.y = minPercent * 0.01f * (lineMaxY - lineMinY) + lineMinY;
+        lineMin.localPosition = posMin;
+        
+        var posMax = lineMax.localPosition;
+        posMax.y = maxPercent * 0.01f * (lineMaxY - lineMinY) + lineMinY;
+        lineMax.localPosition = posMax;
     }
 
     protected override int GetResult()
     {
-        throw new System.NotImplementedException();
+        return particles.Count;
     }
 
     protected override bool UpdateGame()
     {
-        if (isPlaying)
+        if (IsPlaying)
         {
             if (Input.GetKey(KeyCode.Space))
             {
@@ -52,10 +67,20 @@ public class FluidTimingStyleGame : TimingStyleGame
         var obj = Instantiate(particle, particle.transform.parent);
         obj.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
         obj.SetActive(true);
+        
+        particles.Add(obj);
     }
     
     protected override void StopAndCheckTiming()
     {
-        isPlaying = false;
+        FinishGame(IsSuccess());
+    }
+
+    private bool IsSuccess()
+    {
+        Debug.Log($"{particleMax} * {minPercent} * 0.01f <= {particles.Count} && {particles.Count} <= {particleMax} * {maxPercent} * 0.01f");
+        var result = particleMax * minPercent * 0.01f <= particles.Count && particles.Count <= particleMax * maxPercent * 0.01f;
+        Debug.Log(result);
+        return result;
     }
 }

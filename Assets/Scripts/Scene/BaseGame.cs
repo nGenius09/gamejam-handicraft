@@ -9,6 +9,7 @@ public abstract class BaseGame : MonoBehaviour
     [SerializeField] private GameManager.GameMode nextMode;
     [SerializeField] protected int limitTime;
     protected float gameTime { get; private set; }
+    public bool IsPlaying { get; private set; }
 
     protected void SetTime(float gameTime)
     {
@@ -18,16 +19,20 @@ public abstract class BaseGame : MonoBehaviour
     protected virtual void StartGame()
     {
         gameTime = 0;
+        IsPlaying = true;
         GameManager.Instance.OnStartGame?.Invoke();
     }
 
     protected virtual void FinishGame(bool bSuccess = true)
     {
-        GameManager.Instance.OnFinishGame?.Invoke();
+        IsPlaying = false;
+        
         if (bSuccess)
-            GameManager.Instance.FinishGame(gameMode, nextMode);
-        else
-            GameManager.Instance.FinishGame(gameMode, GameManager.GameMode.None);
+        {
+            AccountManager.Instance.AddReputation(GetResult());
+        }
+        
+        GameManager.Instance.OnFinishGame?.Invoke(bSuccess, gameMode, nextMode);
     }
 
     protected virtual int GetResult()
@@ -37,6 +42,7 @@ public abstract class BaseGame : MonoBehaviour
 
     protected virtual bool UpdateGame()
     {
+        gameTime += Time.deltaTime;
         GameManager.Instance.OnUpdateTime?.Invoke(1 - gameTime / limitTime);
         return true;
     }
@@ -48,9 +54,10 @@ public abstract class BaseGame : MonoBehaviour
 
     private void Update()
     {
-        gameTime += Time.deltaTime;
-        
-        UpdateGame();
+        if (IsPlaying)
+        {
+            UpdateGame();
+        }
     }
     
     /// <summary>
@@ -58,6 +65,6 @@ public abstract class BaseGame : MonoBehaviour
     /// </summary>
     public void OnClickFinish()
     {
-        GameManager.Instance.FinishGame(gameMode, nextMode);
+        GameManager.Instance.FinishGame(gameMode, gameMode);
     }
 }

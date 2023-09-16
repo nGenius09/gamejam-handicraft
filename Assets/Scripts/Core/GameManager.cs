@@ -17,7 +17,7 @@ public class GameManager
     
     public Action OnStartGame { get; private set; }
     public Action<float> OnUpdateTime { get; private set; }
-    public Action OnFinishGame { get; private set; }
+    public Action<bool, GameMode, GameMode> OnFinishGame { get; private set; }
 
     ~GameManager()
     {
@@ -68,8 +68,16 @@ public class GameManager
         this.OnUpdateTime += onUpdateTime;
     }
 
-    public void SetFinishGameHandler(Action onFinishGame)
+    public void SetFinishGameHandler(Action<bool, GameMode, GameMode> onFinishGame)
     {
         this.OnFinishGame += onFinishGame;
+    }
+}
+
+public static class GameModeExtension
+{
+    public static bool IsFinalMode(this GameManager.GameMode gameMode)
+    {
+        return gameMode == GameManager.GameMode.Game3;
     }
 }

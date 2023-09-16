@@ -4,16 +4,14 @@ using UnityEngine;
 public class TimingStyleGame : BaseGame
 {
     [SerializeField] private float destinationTime;
-    protected bool isPlaying;
     protected override void StartGame()
     {
         base.StartGame();
-        isPlaying = true;
     }
 
     protected override void FinishGame(bool bSuccess = true)
     {
-        base.FinishGame();
+        base.FinishGame(bSuccess);
     }
 
     protected override int GetResult()
