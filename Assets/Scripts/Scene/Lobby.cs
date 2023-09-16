@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Lobby : MonoBehaviour
@@ -65,6 +66,17 @@ public class Lobby : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            var list = new List<BasePopup>(){successPopup, failPopup, achievementPopup, collectionPopup};
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].IsActive())
+                {
+                    list[i].OnClickClose();
+                    return;
+                }
+            }
+            
             if (!settingPopup.IsActive())
             {
                 settingPopup.Show();
