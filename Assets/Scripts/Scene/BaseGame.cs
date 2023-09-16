@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public abstract class BaseGame : MonoBehaviour
 {
     [SerializeField] private GameManager.GameMode gameMode;
+    [SerializeField] private GameManager.GameMode nextMode;
     [SerializeField] protected int limitTime;
     protected float gameTime { get; private set; }
 
@@ -53,6 +54,6 @@ public abstract class BaseGame : MonoBehaviour
     /// </summary>
     public void OnClickFinish()
     {
-        GameManager.Instance.FinishGame(gameMode);
+        GameManager.Instance.FinishGame(gameMode, nextMode);
     }
 }

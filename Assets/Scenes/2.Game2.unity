@@ -1061,6 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 2
+  nextMode: 3
   limitTime: 0
   destinationTime: 0
   particle: {fileID: 1930044827}

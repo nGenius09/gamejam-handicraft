@@ -862,7 +862,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1396703359}
         m_TargetAssemblyTypeName: BaseGame, Assembly-CSharp
         m_MethodName: OnClickFinish
         m_Mode: 1
@@ -1080,6 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 3
+  nextMode: 0
   limitTime: 60
   destinationTime: 0
   blocks:

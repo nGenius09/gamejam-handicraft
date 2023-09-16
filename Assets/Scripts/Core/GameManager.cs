@@ -46,10 +46,17 @@ public class GameManager
         CurrentMode = gameMode;
     }
     
-    public void FinishGame(GameMode gameMode)
+    public void FinishGame(GameMode gameMode, GameMode nextMode)
     {
         var op = SceneManager.UnloadSceneAsync($"2.{gameMode}");
-        CurrentMode = GameMode.None;
+        if (nextMode != GameMode.None)
+        {
+            StartGame(nextMode);
+        }
+        else
+        {
+            CurrentMode = GameMode.None;
+        }
     }
     
     public void SetStartGameHandler(Action onStartGame)

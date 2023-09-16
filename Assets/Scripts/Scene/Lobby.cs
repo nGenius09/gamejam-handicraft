@@ -40,7 +40,7 @@ public class Lobby : MonoBehaviour
 
     public void OnClickStart()
     {
-        GameManager.Instance.StartGame(GameManager.GameMode.Game2);
+        GameManager.Instance.StartGame(GameManager.GameMode.Game1);
     }
 
     public void OnClickSetting()
