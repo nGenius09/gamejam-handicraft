@@ -1,0 +1,148 @@
+{
+  "data": [
+    {
+      "ID": "0",
+      "Type": "1",
+      "Score": "10",
+      "TimeLimit": "30",
+      "LetterTypeCount": "4",
+      "LetterLength": "25"
+    },
+    {
+      "ID": "1",
+      "Type": "2",
+      "Score": "10",
+      "TimeLimit": "0",
+      "LetterTypeCount": "4",
+      "LetterLength": "0"
+    },
+    {
+      "ID": "2",
+      "Type": "3",
+      "Score": "10",
+      "TimeLimit": "60",
+      "LetterTypeCount": "4",
+      "LetterLength": "10"
+    },
+    {
+      "ID": "3",
+      "Type": "1",
+      "Score": "20",
+      "TimeLimit": "40",
+      "LetterTypeCount": "8",
+      "LetterLength": "35"
+    },
+    {
+      "ID": "4",
+      "Type": "2",
+      "Score": "20",
+      "TimeLimit": "0",
+      "LetterTypeCount": "5",
+      "LetterLength": "0"
+    },
+    {
+      "ID": "5",
+      "Type": "3",
+      "Score": "20",
+      "TimeLimit": "50",
+      "LetterTypeCount": "5",
+      "LetterLength": "10"
+    },
+    {
+      "ID": "6",
+      "Type": "1",
+      "Score": "30",
+      "TimeLimit": "50",
+      "LetterTypeCount": "7",
+      "LetterLength": "50"
+    },
+    {
+      "ID": "7",
+      "Type": "2",
+      "Score": "30",
+      "TimeLimit": "0",
+      "LetterTypeCount": "6",
+      "LetterLength": "0"
+    },
+    {
+      "ID": "8",
+      "Type": "3",
+      "Score": "30",
+      "TimeLimit": "40",
+      "LetterTypeCount": "6",
+      "LetterLength": "15"
+    },
+    {
+      "ID": "9",
+      "Type": "1",
+      "Score": "40",
+      "TimeLimit": "55",
+      "LetterTypeCount": "9",
+      "LetterLength": "60"
+    },
+    {
+      "ID": "10",
+      "Type": "2",
+      "Score": "40",
+      "TimeLimit": "0",
+      "LetterTypeCount": "7",
+      "LetterLength": "0"
+    },
+    {
+      "ID": "11",
+      "Type": "3",
+      "Score": "40",
+      "TimeLimit": "30",
+      "LetterTypeCount": "7",
+      "LetterLength": "20"
+    },
+    {
+      "ID": "12",
+      "Type": "1",
+      "Score": "50",
+      "TimeLimit": "55",
+      "LetterTypeCount": "12",
+      "LetterLength": "75"
+    },
+    {
+      "ID": "13",
+      "Type": "2",
+      "Score": "50",
+      "TimeLimit": "0",
+      "LetterTypeCount": "8",
+      "LetterLength": "0"
+    },
+    {
+      "ID": "14",
+      "Type": "3",
+      "Score": "50",
+      "TimeLimit": "30",
+      "LetterTypeCount": "8",
+      "LetterLength": "20"
+    },
+    {
+      "ID": "15",
+      "Type": "1",
+      "Score": "60",
+      "TimeLimit": "55",
+      "LetterTypeCount": "15",
+      "LetterLength": "100"
+    },
+    {
+      "ID": "16",
+      "Type": "2",
+      "Score": "60",
+      "TimeLimit": "0",
+      "LetterTypeCount": "9",
+      "LetterLength": "0"
+    },
+    {
+      "ID": "17",
+      "Type": "3",
+      "Score": "60",
+      "TimeLimit": "20",
+      "LetterTypeCount": "9",
+      "LetterLength": "25"
+    }
+  ]
+}
