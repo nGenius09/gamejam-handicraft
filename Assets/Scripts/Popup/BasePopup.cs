@@ -11,4 +11,9 @@ public class BasePopup : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+
+    public bool IsActive()
+    {
+        return gameObject.activeSelf;
+    }
 }
