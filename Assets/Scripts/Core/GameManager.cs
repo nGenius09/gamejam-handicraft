@@ -27,12 +27,14 @@ public class GameManager
     
     public void ResetAll()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("0.Intro");
         CurrentMode = GameMode.None;
     }
 
     public void LoadLobby()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("1.Lobby");
         CurrentMode = GameMode.None;
     }
