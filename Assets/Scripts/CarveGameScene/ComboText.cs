@@ -13,8 +13,8 @@ public class ComboText : MonoBehaviour
 
     private CancellationTokenSource _cts = new CancellationTokenSource();
 
-    private float _keepTime = 1;
-    private float _curtime = 1;
+    public float _keepTime = 1;
+    public float _curtime = 1;
 
     public void Init()
     {
