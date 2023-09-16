@@ -6,12 +6,16 @@ public class Lobby : MonoBehaviour
     [SerializeField] private SettingPopup settingPopup;
     [SerializeField] private SuccessPopup successPopup;
     [SerializeField] private FailPopup failPopup;
+    [SerializeField] private AchievementPopup achievementPopup;
+    [SerializeField] private CollectionPopup collectionPopup;
 
     private void Awake()
     {
         settingPopup.gameObject.SetActive(false);
         successPopup.gameObject.SetActive(false);
         failPopup.gameObject.SetActive(false);
+        achievementPopup.gameObject.SetActive(false);
+        collectionPopup.gameObject.SetActive(false);
         
         GameManager.Instance.SetStartGameHandler(OnStartGame);
         GameManager.Instance.SetUpdateTimeHandler(OnUpdateTime);
@@ -79,12 +83,12 @@ public class Lobby : MonoBehaviour
 
     public void OnClickCollection()
     {
-        
+        collectionPopup.Show();
     }
 
     public void OnClickAchievement()
     {
-        
+        achievementPopup.Show();
     }
 
     public void OnClickSetting()
