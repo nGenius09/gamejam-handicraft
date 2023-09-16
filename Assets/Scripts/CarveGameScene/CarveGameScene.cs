@@ -32,7 +32,6 @@ public class CarveGameScene : MonoBehaviour
     System.Random _rand = new System.Random();
 
     private Dictionary<char, int> _appearLetterSearchChar = new Dictionary<char, int>();
-    private Dictionary<int, char> _appearLetterSearchInt = new Dictionary<int, char>();
 
     private StringBuilder _nonDuplicateString;
     //List<KeyCode> _nonDuplicateEnum = new List<KeyCode>();
@@ -50,10 +49,9 @@ public class CarveGameScene : MonoBehaviour
 
     private void Start()
     {
-        Divide_Letter(new StringBuilder("안녕하세요반갑습니다"));
+        Divide_Letter(new StringBuilder("씌쑤뺴쨔꼐뛰"));
         CheckDupllicate(20, 4);
         _appearLetterSearchChar.Clear();
-        _appearLetterSearchInt.Clear();
         MakeKeyCodeNCharTable();
         _timeLimit.maxValue = time;
 
@@ -138,23 +136,36 @@ public class CarveGameScene : MonoBehaviour
     private void CheckDupllicate(int letterLen, int typeCount)
     {
         _nonDuplicateString = new StringBuilder(letterLen);
+        StringBuilder temp = new StringBuilder(_appearLetterSearchChar.Count);
         List<int> randType = new List<int>();
         int randomNum;
         char curLetter = '!';
         short countDuplication = 1;
 
-        while (randType.Count < typeCount)
+        foreach(var Key in _appearLetterSearchChar.Keys)
+            temp.Append(Key);
+
+        if (typeCount < temp.Length)
         {
-            randomNum = _rand.Next(0, _appearLetterSearchChar.Count);
-            if (randType.IndexOf(randomNum) == -1)
-                randType.Add(randomNum);
+            while (randType.Count < typeCount)
+            {
+                randomNum = _rand.Next(0, temp.Length);
+                if (randType.IndexOf(randomNum) == -1)
+                    randType.Add(randomNum);
+            }
+        }
+
+        else
+        {
+            for (int i = 0; i < temp.Length; ++i)
+                randType.Add(i);
         }
 
         for (int i = 0; i < letterLen; ++i)
         {
             randomNum = _rand.Next(0, randType.Count);
     
-            if (curLetter == _appearLetterSearchInt[randomNum])
+            if (curLetter == temp[randomNum])
             {
                 if (countDuplication > 1)
                 {
@@ -168,7 +179,7 @@ public class CarveGameScene : MonoBehaviour
             else
             {
                 countDuplication = 1;
-                curLetter = _appearLetterSearchInt[randomNum];
+                curLetter = temp[randomNum];
             }
 
             _nonDuplicateString.Append(curLetter);
@@ -196,24 +207,19 @@ public class CarveGameScene : MonoBehaviour
             if (tempUnicode < _koreanStart || tempUnicode > _koreanEnd)
             {
                 if ((tempUnicode >= _numberStart && tempUnicode <= _numberEnd))
-                {
-                    //dividedLetter.Append(str[i]);
-                    if (_appearLetterSearchChar.TryAdd(str[i], _appearLetterSearchChar.Count))
-                        _appearLetterSearchInt.Add(_appearLetterSearchInt.Count, str[i]);
-                }
+                    _appearLetterSearchChar.TryAdd(str[i], _appearLetterSearchChar.Count);
+                
                 continue;
             }
             tempUnicode -= _koreanStart;
             letterStart = tempUnicode / (21 * 28);
             //dividedLetter.Append(_startconsonant[letterStart]);
-            if (_appearLetterSearchChar.TryAdd(_startconsonant[letterStart], _appearLetterSearchChar.Count))
-                _appearLetterSearchInt.Add(_appearLetterSearchInt.Count, _startconsonant[letterStart]);
+            _appearLetterSearchChar.TryAdd(_startconsonant[letterStart], _appearLetterSearchChar.Count);
 
             tempUnicode %= (21 * 28);
             letterMid = tempUnicode / 28;
             //dividedLetter.Append(_vowel[letterMid]);
-            if (_appearLetterSearchChar.TryAdd(_vowel[letterMid], _appearLetterSearchChar.Count))
-                _appearLetterSearchInt.Add(_appearLetterSearchInt.Count, _vowel[letterMid]);
+            _appearLetterSearchChar.TryAdd(_vowel[letterMid], _appearLetterSearchChar.Count);
 
             tempUnicode %= 28;
             letterEnd = tempUnicode;
@@ -221,13 +227,14 @@ public class CarveGameScene : MonoBehaviour
             if (letterEnd != 0)
             {
                 //dividedLetter.Append(_endconsonant[letterEnd - 1]);
-                if (_appearLetterSearchChar.TryAdd(_endconsonant[letterEnd - 1], _appearLetterSearchChar.Count))
-                    _appearLetterSearchInt.Add(_appearLetterSearchInt.Count, _endconsonant[letterEnd - 1]);
+                _appearLetterSearchChar.TryAdd(_endconsonant[letterEnd - 1], _appearLetterSearchChar.Count);
             }
         }
 
         for (i = 0; i < _excludedLetter.Length; ++i)
+        {
             _appearLetterSearchChar.Remove(_excludedLetter[i]);
+        }
     }
 
     public void Clear()
