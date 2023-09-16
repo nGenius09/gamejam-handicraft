@@ -5,11 +5,18 @@ using UnityEngine.UI;
 
 public abstract class BaseGame : MonoBehaviour
 {
-    [FormerlySerializedAs("gameName")] [SerializeField] private GameManager.GameMode gameMode;
-    private float gameTime;
+    [SerializeField] private GameManager.GameMode gameMode;
+    [SerializeField] protected int limitTime;
+    protected float gameTime { get; private set; }
+
+    protected void SetTime(float gameTime)
+    {
+        this.gameTime = gameTime;
+    }
 
     protected virtual void StartGame()
     {
+        gameTime = 0;
         GameManager.Instance.OnStartGame?.Invoke();
     }
 
@@ -25,7 +32,7 @@ public abstract class BaseGame : MonoBehaviour
 
     protected virtual bool UpdateGame()
     {
-        GameManager.Instance.OnUpdateTime?.Invoke(1 - gameTime / 10f);
+        GameManager.Instance.OnUpdateTime?.Invoke(1 - gameTime / limitTime);
         return true;
     }
 
