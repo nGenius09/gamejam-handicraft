@@ -17,6 +17,7 @@ public class FluidTimingStyleGame : TimingStyleGame
     private float deltaTime;
     private float speed = 1f;
     private List<GameObject> particles = new List<GameObject>();
+    private bool pressSpace;
 
     protected override void StartGame()
     {
@@ -38,7 +39,7 @@ public class FluidTimingStyleGame : TimingStyleGame
 
     protected override bool UpdateGame()
     {
-        if (IsPlaying)
+        if (IsPlaying && !pressSpace)
         {
             if (Input.GetKey(KeyCode.Space))
             {
@@ -54,7 +55,8 @@ public class FluidTimingStyleGame : TimingStyleGame
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
-                StopAndCheckTiming();
+                pressSpace = true;
+                Invoke("StopAndCheckTiming", 2.5f);
             }
         }
 
