@@ -13,11 +13,6 @@ public struct Data
     public int LetterTypeCount;
     public int LetterLength;
     public string Letter;
-
-    public void Load(out Dictionary<int, Data> data)
-    {
-        data = new Dictionary<int, Data>();
-    }
 }
 
 [Serializable]
@@ -44,5 +39,46 @@ public struct SoundVolume
     {
         BGM = bgm;
         Effect = effect;
+    }
+}
+
+[Serializable]
+public struct CompleteBook
+{
+    public int Id;
+    public int Level;
+    public string Txt;
+}
+
+[Serializable]
+public class BookLoad
+{
+    public List<CompleteBook> data3;
+
+    public void Load(out Dictionary<int, CompleteBook> dic)
+    {
+        dic = new Dictionary<int, CompleteBook>();
+        for (int i = 0; i < data3.Count; ++i)
+            dic.Add(data3[i].Id, data3[i]);
+    }
+}
+
+[Serializable]
+public struct Achive
+{
+    public int Id;
+    public string Txt;
+}
+
+[Serializable]
+public class AchiveLoad
+{
+    public List<Achive> data2;
+
+    public void Load(out Dictionary<int, Achive> dic)
+    {
+        dic = new Dictionary<int, Achive>();
+        for (int i = 0; i < data2.Count; ++i)
+            dic.Add(data2[i].Id, data2[i]);
     }
 }
