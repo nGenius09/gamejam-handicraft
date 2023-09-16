@@ -584,6 +584,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5004263213659738024, guid: e345c97f51fd9fc4eb04809f67157476, type: 3}
   m_PrefabInstance: {fileID: 101557997}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &103563207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103563208}
+  - component: {fileID: 103563210}
+  - component: {fileID: 103563209}
+  m_Layer: 5
+  m_Name: Fever
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &103563208
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103563207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1731207246}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &103563209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103563207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 4af65194f7763104f82927ef9adc733f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &103563210
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103563207}
+  m_CullTransparentMesh: 1
 --- !u!1001 &125049352
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2426,6 +2501,7 @@ RectTransform:
   - {fileID: 714434659}
   - {fileID: 61395789}
   - {fileID: 1662993586}
+  - {fileID: 1934188631}
   m_Father: {fileID: 1731207246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.45, y: 0.1}
@@ -2984,7 +3060,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1934188631}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1438426129
 PrefabInstance:
@@ -4273,6 +4349,7 @@ RectTransform:
   - {fileID: 1937374894}
   - {fileID: 1501249362}
   - {fileID: 898627336}
+  - {fileID: 103563208}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4693,6 +4770,7 @@ MonoBehaviour:
   _failImg: {fileID: 1937374895}
   _fever: {fileID: 1501249364}
   _feverRect: {fileID: 898627336}
+  _feverLetter: {fileID: 103563208}
   ComboTime: 2
   timeBar: {fileID: 2073976305}
 --- !u!212 &1871916641
@@ -4982,12 +5060,11 @@ Transform:
   m_GameObject: {fileID: 1934188630}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.000030517578, y: 0, z: -9004.577}
+  m_LocalScale: {x: 100.05086, y: 100.05086, z: 100.05086}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1349970405}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 898627336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1934188632
 SpriteRenderer:
@@ -5922,6 +5999,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1871916639}
-  - {fileID: 1934188631}
+  - {fileID: 1349970405}
   - {fileID: 2073976303}
   - {fileID: 1731207246}
