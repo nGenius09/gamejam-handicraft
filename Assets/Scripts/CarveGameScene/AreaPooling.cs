@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class AreaPooling : MonoBehaviour
 {
@@ -9,19 +10,16 @@ public class AreaPooling : MonoBehaviour
 
     private Queue<TypingArea> _offArea = new Queue<TypingArea>(6);
 
-    private readonly Vector2 _curAreaPos = new Vector2(0, -200);
-    private readonly Vector2 _nextAreaPos = new Vector2(1360, -200);
-
-    private Sprite[] _sprites;
+    private readonly Vector2 _curAreaPos = new Vector2(0, -350);
+    private readonly Vector2 _nextAreaPos = new Vector2(1360, -350);
 
     public void Init(string str)
     {
-        _sprites = Resources.LoadAll<Sprite>("");
         for (int i = 0; i < transform.childCount; ++i)
         {
             _offArea.Enqueue(transform.GetChild(i).GetComponent<TypingArea>());
         }
-
+        
         ActiveArea(str);
         _activeArea.Peek().MoveToTargetPos(_curAreaPos);
     }
@@ -47,7 +45,7 @@ public class AreaPooling : MonoBehaviour
 
     public void ActiveImageEffect(int point)
     {
-        _curArea.SetOffImage(point);
+        _curArea.SetImage(point);
     }
 
     public void Clear()

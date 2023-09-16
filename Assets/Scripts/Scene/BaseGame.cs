@@ -24,6 +24,7 @@ public abstract class BaseGame : MonoBehaviour
     protected virtual void FinishGame()
     {
         GameManager.Instance.OnFinishGame?.Invoke();
+        GameManager.Instance.FinishGame(gameMode, nextMode);
     }
 
     protected virtual int GetResult()

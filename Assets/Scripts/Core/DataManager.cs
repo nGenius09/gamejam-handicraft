@@ -25,13 +25,4 @@ public class DataManager
         TextAsset data = Resources.Load<TextAsset>("minigame");
         JsonUtility.FromJson<DataLoad>(data.text).Load(out _dataTable);
     }
-
-
-    //private void Init()
-    //{
-    //    DontDestroyOnLoad(gameObject);
-    //    TextAsset data = Resources.Load<TextAsset>("minigame");
-    //    JsonUtility.FromJson<DataLoad>(data.text).Load(out _dataTable);
-    //    Debug.Log("x");
-    //}
 }

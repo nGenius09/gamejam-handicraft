@@ -20,8 +20,6 @@ public class CarveGameScene : BaseGame
     private readonly ushort _numberEnd = 57;
 
     private Dictionary<KeyCode, char> _keyCodeNCharPair = new Dictionary<KeyCode, char>();
-    
-    private readonly List<ushort> _includeLetter = new List<ushort>() { 39, 44, 45, 46, 47, 59, 61, 91, 92, 93, 96 }; 
 
     System.Random _rand = new System.Random();
 
@@ -33,17 +31,27 @@ public class CarveGameScene : BaseGame
 
     [SerializeField]
     private AreaPooling _area;
+    [SerializeField]
+    private BlockPooling _block;
+    [SerializeField]
+    private ComboText _comboText;
+
+    public float ComboTime = 1;
+    private float _curComboTime;
 
     [SerializeField] private TimeBar timeBar;
 
+    private int _combo;
+
     private CancellationTokenSource _cts = new CancellationTokenSource();
+    private IDisposable _checkInput;
     
     protected override void StartGame()
     {
         base.StartGame();
         
-        Divide_Letter(new StringBuilder("씌쑤뺴쨔꼐뛰"));
-        CheckDuplicate(20, 4);
+        Divide_Letter(new StringBuilder("동창이 밝았느냐"));
+        CheckDuplicate(45, 6);
         _appearLetterSearchChar.Clear();
         MakeKeyCodeNCharTable();
         
@@ -53,16 +61,19 @@ public class CarveGameScene : BaseGame
             str.Append(_nonDuplicateString[i]);
 
         _area.Init(str.ToString());
-
-        this.UpdateAsObservable().Subscribe(_ => CheckInput());
+        _block.Init(_nonDuplicateString.Length);
+        _comboText.Init();
+        _curComboTime = ComboTime;
+        Debug.Log($"{_curComboTime} {ComboTime}");
+        CheckComboTime().Forget();
+        _checkInput =  this.UpdateAsObservable().Subscribe(_ => CheckInput());
         //TickTime().Forget();
     }
 
     protected override void FinishGame()
     {
-        base.FinishGame();
-        
         Clear();
+        base.FinishGame();
     }
     
     protected override bool UpdateGame()
@@ -97,6 +108,23 @@ public class CarveGameScene : BaseGame
         }
     }
 
+    private async UniTaskVoid CheckComboTime()
+    {
+        while (true)
+        {
+            await UniTask.WaitUntil(() => _curComboTime > 0.5f, cancellationToken: _cts.Token);
+
+            while (_curComboTime > 0.0f)
+            {
+                await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
+                _curComboTime -= Time.deltaTime;
+            }
+
+            _combo = 0;
+            _comboText.GetInput(_combo);
+        }
+    }
+
     private void CheckInput()
     {
         //Input.inputString
@@ -109,11 +137,15 @@ public class CarveGameScene : BaseGame
                     Debug.Log($"input is {_keyCodeNCharPair[key]}, Success");
                     _area.ActiveImageEffect(_stringPointer % 5);
                     ++_stringPointer;
+                    ++_combo;
+                    _curComboTime = ComboTime;
+                    _block.SetBlock(_stringPointer);
+                    _comboText.GetInput(_combo);
 
                     if (_nonDuplicateString.Length == _stringPointer)
                     {
                         //���� ��!
-                        _area.Clear();
+                        FinishGame();
                     }
 
                     else if (_stringPointer % 5 == 0)
@@ -130,7 +162,9 @@ public class CarveGameScene : BaseGame
                 else
                 {
                     ShakeSlider().Forget();
-                    SetTime(gameTime - 5);
+                    SetTime(gameTime + 5);
+                    _combo = 0;
+                    _comboText.GetInput(_combo);
                     Debug.Log($"input is {_keyCodeNCharPair[key]} curLetter is {_nonDuplicateString[_stringPointer]}, Fail");
                     //����!
                 }
@@ -246,6 +280,9 @@ public class CarveGameScene : BaseGame
     {
         _cts.Cancel();
         _cts.Dispose();
+        _area.Clear();
+        _checkInput.Dispose();
+        _comboText.Clear();
     }
 
     private void MakeKeyCodeNCharTable()
