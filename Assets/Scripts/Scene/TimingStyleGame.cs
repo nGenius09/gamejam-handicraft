@@ -28,6 +28,5 @@ public class TimingStyleGame : BaseGame
 
     protected virtual void StopAndCheckTiming()
     {
-        isPlaying = false;
     }
 }

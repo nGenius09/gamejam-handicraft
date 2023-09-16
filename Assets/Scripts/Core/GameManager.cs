@@ -9,6 +9,7 @@ public class GameManager
         None,
         Game1,
         Game2,
+        Game3,
     }
     public static GameManager Instance { get; } = new GameManager();
 

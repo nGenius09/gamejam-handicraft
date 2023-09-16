@@ -4,6 +4,7 @@ public class FluidTimingStyleGame : TimingStyleGame
 {
     [SerializeField] private GameObject particle;
     private float deltaTime;
+    private float speed = 1f;
     
     protected override void StartGame()
     {
@@ -26,13 +27,15 @@ public class FluidTimingStyleGame : TimingStyleGame
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                deltaTime += Time.deltaTime;
+                deltaTime += Time.deltaTime * speed;
                 if (deltaTime > 0.01f)
                 {
                     SpawnParticle();
                     SpawnParticle();
                     deltaTime -= 0.01f;
                 }
+                
+                speed += Random.Range(0, 5) * Time.deltaTime;
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -49,5 +52,10 @@ public class FluidTimingStyleGame : TimingStyleGame
         var obj = Instantiate(particle, particle.transform.parent);
         obj.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
         obj.SetActive(true);
+    }
+    
+    protected override void StopAndCheckTiming()
+    {
+        isPlaying = false;
     }
 }
