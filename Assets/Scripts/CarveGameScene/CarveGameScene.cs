@@ -15,10 +15,10 @@ using UnityEngine.UIElements;
 
 public class CarveGameScene : MonoBehaviour
 {
-    private readonly StringBuilder _startconsonant = new StringBuilder("¤¡¤¢¤¤¤§¤¨¤©¤±¤²¤³¤µ¤¶¤·¤¸¤¹¤º¤»¤¼¤½¤¾");
-    private readonly StringBuilder _vowel = new StringBuilder("¤¿¤À¤Á¤Â¤Ã¤Ä¤Å¤Æ¤Ç¤È¤É¤Ê¤Ë¤Ì¤Í¤Î¤Ï¤Ğ¤Ñ¤Ò¤Ó");
-    private readonly StringBuilder _endconsonant = new StringBuilder("¤¡¤¢¤£¤¤¤¥¤¦¤§¤©¤ª¤«¤¬¤­¤®¤¯¤°¤±¤²¤´¤µ¤¶¤·¤¸¤º¤»¤¼¤½¤¾");
-    private readonly StringBuilder _excludedLetter = new StringBuilder("¤³¤¹¤¨¤¢¤¶¤Â¤Æ¤È¤É¤Ê¤Í¤Î¤Ï¤Ò¤£¤¥¤¦¤ª¤«¤¬¤­¤®¤¯¤°¤´");
+    private readonly StringBuilder _startconsonant = new StringBuilder("ã„±ã„²ã„´ã„·ã„¸ã„¹ã…ã…‚ã…ƒã……ã…†ã…‡ã…ˆã…‰ã…Šã…‹ã…Œã…ã…");
+    private readonly StringBuilder _vowel = new StringBuilder("ã…ã…ã…‘ã…’ã…“ã…”ã…•ã…–ã…—ã…˜ã…™ã…šã…›ã…œã…ã…ã…Ÿã… ã…¡ã…¢ã…£");
+    private readonly StringBuilder _endconsonant = new StringBuilder("ã„±ã„²ã„³ã„´ã„µã„¶ã„·ã„¹ã„ºã„»ã„¼ã„½ã„¾ã„¿ã…€ã…ã…‚ã…„ã……ã…†ã…‡ã…ˆã…Šã…‹ã…Œã…ã…");
+    private readonly StringBuilder _excludedLetter = new StringBuilder("ã…ƒã…‰ã„¸ã„²ã…†ã…’ã…–ã…˜ã…™ã…šã…ã…ã…Ÿã…¢ã„³ã„µã„¶ã„ºã„»ã„¼ã„½ã„¾ã„¿ã…€ã…„");
 
     private readonly ushort _koreanStart = 0xAC00;
     private readonly ushort _koreanEnd = 0xD79F;
@@ -50,7 +50,7 @@ public class CarveGameScene : MonoBehaviour
 
     private void Start()
     {
-        Divide_Letter(new StringBuilder("1³Ê;¶û'³ª5¶ûÀº./"));
+        Divide_Letter(new StringBuilder("ì•ˆë…•í•˜ì„¸ìš”ë°˜ê°‘ìŠµë‹ˆë‹¤"));
         CheckDupllicate(20, 4);
         _appearLetterSearchChar.Clear();
         _appearLetterSearchInt.Clear();
@@ -72,7 +72,7 @@ public class CarveGameScene : MonoBehaviour
     {
         while (time > 0)
         {
-            //¿É¼ÇÃ¢ active¿©ºÎ?
+            //ï¿½É¼ï¿½Ã¢ activeï¿½ï¿½ï¿½ï¿½?
             await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
             time -= Time.deltaTime;
             _timeLimit.value = time;
@@ -109,7 +109,7 @@ public class CarveGameScene : MonoBehaviour
 
                     if (_nonDuplicateString.Length == _stringPointer)
                     {
-                        //°ÔÀÓ ³¡!
+                        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½!
                         _area.Clear();
                     }
 
@@ -129,7 +129,7 @@ public class CarveGameScene : MonoBehaviour
                     ShakeSlider().Forget();
                     time -= 5;
                     Debug.Log($"input is {_keyCodeNCharPair[key]} curLetter is {_nonDuplicateString[_stringPointer]}, Fail");
-                    //½ÇÆĞ!
+                    //ï¿½ï¿½ï¿½ï¿½!
                 }
             }
         }
@@ -238,32 +238,32 @@ public class CarveGameScene : MonoBehaviour
 
     private void MakeKeyCodeNCharTable()
     {
-        _keyCodeNCharPair.Add(KeyCode.Q, '¤²');
-        _keyCodeNCharPair.Add(KeyCode.W, '¤¸');
-        _keyCodeNCharPair.Add(KeyCode.E, '¤§');
-        _keyCodeNCharPair.Add(KeyCode.R, '¤¡');
-        _keyCodeNCharPair.Add(KeyCode.T, '¤µ');
-        _keyCodeNCharPair.Add(KeyCode.Y, '¤Ë');
-        _keyCodeNCharPair.Add(KeyCode.U, '¤Å');
-        _keyCodeNCharPair.Add(KeyCode.I, '¤Á');
-        _keyCodeNCharPair.Add(KeyCode.O, '¤À');
-        _keyCodeNCharPair.Add(KeyCode.P, '¤Ä');
-        _keyCodeNCharPair.Add(KeyCode.A, '¤±');
-        _keyCodeNCharPair.Add(KeyCode.S, '¤¤');
-        _keyCodeNCharPair.Add(KeyCode.D, '¤·');
-        _keyCodeNCharPair.Add(KeyCode.F, '¤©');
-        _keyCodeNCharPair.Add(KeyCode.G, '¤¾');
-        _keyCodeNCharPair.Add(KeyCode.H, '¤Ç');
-        _keyCodeNCharPair.Add(KeyCode.J, '¤Ã');
-        _keyCodeNCharPair.Add(KeyCode.K, '¤¿');
-        _keyCodeNCharPair.Add(KeyCode.L, '¤Ó');
-        _keyCodeNCharPair.Add(KeyCode.Z, '¤»');
-        _keyCodeNCharPair.Add(KeyCode.X, '¤¼');
-        _keyCodeNCharPair.Add(KeyCode.C, '¤º');
-        _keyCodeNCharPair.Add(KeyCode.V, '¤½');
-        _keyCodeNCharPair.Add(KeyCode.B, '¤Ğ');
-        _keyCodeNCharPair.Add(KeyCode.N, '¤Ì');
-        _keyCodeNCharPair.Add(KeyCode.M, '¤Ñ');
+        _keyCodeNCharPair.Add(KeyCode.Q, 'ã…‚');
+        _keyCodeNCharPair.Add(KeyCode.W, 'ã…ˆ');
+        _keyCodeNCharPair.Add(KeyCode.E, 'ã„·');
+        _keyCodeNCharPair.Add(KeyCode.R, 'ã„±');
+        _keyCodeNCharPair.Add(KeyCode.T, 'ã……');
+        _keyCodeNCharPair.Add(KeyCode.Y, 'ã…›');
+        _keyCodeNCharPair.Add(KeyCode.U, 'ã…•');
+        _keyCodeNCharPair.Add(KeyCode.I, 'ã…‘');
+        _keyCodeNCharPair.Add(KeyCode.O, 'ã…');
+        _keyCodeNCharPair.Add(KeyCode.P, 'ã…”');
+        _keyCodeNCharPair.Add(KeyCode.A, 'ã…');
+        _keyCodeNCharPair.Add(KeyCode.S, 'ã„´');
+        _keyCodeNCharPair.Add(KeyCode.D, 'ã…‡');
+        _keyCodeNCharPair.Add(KeyCode.F, 'ã„¹');
+        _keyCodeNCharPair.Add(KeyCode.G, 'ã…');
+        _keyCodeNCharPair.Add(KeyCode.H, 'ã…—');
+        _keyCodeNCharPair.Add(KeyCode.J, 'ã…“');
+        _keyCodeNCharPair.Add(KeyCode.K, 'ã…');
+        _keyCodeNCharPair.Add(KeyCode.L, 'ã…£');
+        _keyCodeNCharPair.Add(KeyCode.Z, 'ã…‹');
+        _keyCodeNCharPair.Add(KeyCode.X, 'ã…Œ');
+        _keyCodeNCharPair.Add(KeyCode.C, 'ã…Š');
+        _keyCodeNCharPair.Add(KeyCode.V, 'ã…');
+        _keyCodeNCharPair.Add(KeyCode.B, 'ã… ');
+        _keyCodeNCharPair.Add(KeyCode.N, 'ã…œ');
+        _keyCodeNCharPair.Add(KeyCode.M, 'ã…¡');
         _keyCodeNCharPair.Add(KeyCode.Alpha1, '1');
         _keyCodeNCharPair.Add(KeyCode.Alpha2, '2');
         _keyCodeNCharPair.Add(KeyCode.Alpha3, '3');
@@ -281,109 +281,109 @@ public class CarveGameScene : MonoBehaviour
         switch (_text.text[0])
         {
             case 'R':
-                return '¤¡';
+                return 'ï¿½ï¿½';
             case 'r':
-                return '¤¡';
+                return 'ï¿½ï¿½';
             case 'Q':
-                return '¤²';
+                return 'ï¿½ï¿½';
             case 'q':
-                return '¤²';
+                return 'ï¿½ï¿½';
             case 'A':
-                return '¤±';
+                return 'ï¿½ï¿½';
             case 'a':
-                return '¤±';
+                return 'ï¿½ï¿½';
             case 'S':
-                return '¤¤';
+                return 'ï¿½ï¿½';
             case 's':
-                return '¤¤';
+                return 'ï¿½ï¿½';
             case 'D':
-                return '¤·';
+                return 'ï¿½ï¿½';
             case 'd':
-                return '¤·';
+                return 'ï¿½ï¿½';
             case 'F':
-                return '¤©';
+                return 'ï¿½ï¿½';
             case 'f':
-                return '¤©';
+                return 'ï¿½ï¿½';
             case 'Z':
-                return '¤»';
+                return 'ï¿½ï¿½';
             case 'z':
-                return '¤»';
+                return 'ï¿½ï¿½';
             case 'X':
-                return '¤¼';
+                return 'ï¿½ï¿½';
             case 'x':
-                return '¤¼';
+                return 'ï¿½ï¿½';
             case 'C':
-                return '¤º';
+                return 'ï¿½ï¿½';
             case 'c':
-                return '¤º';
+                return 'ï¿½ï¿½';
             case 'V':
-                return '¤½';
+                return 'ï¿½ï¿½';
             case 'v':
-                return '¤½';
+                return 'ï¿½ï¿½';
             case 'W':
-                return '¤¸';
+                return 'ï¿½ï¿½';
             case 'w':
-                return '¤¸';
+                return 'ï¿½ï¿½';
             case 'E':
-                return '¤§';
+                return 'ï¿½ï¿½';
             case 'e':
-                return '¤§';
+                return 'ï¿½ï¿½';
             case 'T':
-                return '¤µ';
+                return 'ï¿½ï¿½';
             case 't':
-                return '¤µ';
+                return 'ï¿½ï¿½';
             case 'Y':
-                return '¤Ë';
+                return 'ï¿½ï¿½';
             case 'y':
-                return '¤Ë';
+                return 'ï¿½ï¿½';
             case 'U':
-                return '¤Å';
+                return 'ï¿½ï¿½';
             case 'u':
-                return '¤Å';
+                return 'ï¿½ï¿½';
             case 'I':
-                return '¤Á';
+                return 'ï¿½ï¿½';
             case 'i':
-                return '¤Á';
+                return 'ï¿½ï¿½';
             case 'G':
-                return '¤¾';
+                return 'ï¿½ï¿½';
             case 'g':
-                return '¤¾';
+                return 'ï¿½ï¿½';
             case 'H':
-                return '¤Ç';
+                return 'ï¿½ï¿½';
             case 'h':
-                return '¤Ç';
+                return 'ï¿½ï¿½';
             case 'J':
-                return '¤Ã';
+                return 'ï¿½ï¿½';
             case 'j':
-                return '¤Ã';
+                return 'ï¿½ï¿½';
             case 'K':
-                return '¤¿';
+                return 'ï¿½ï¿½';
             case 'k':
-                return '¤¿';
+                return 'ï¿½ï¿½';
             case 'B':
-                return '¤Ğ';
+                return 'ï¿½ï¿½';
             case 'b':
-                return '¤Ğ';
+                return 'ï¿½ï¿½';
             case 'N':
-                return '¤Ì';
+                return 'ï¿½ï¿½';
             case 'n':
-                return '¤Ì';
+                return 'ï¿½ï¿½';
             case 'M':
-                return '¤Ñ';
+                return 'ï¿½ï¿½';
             case 'm':
-                return '¤Ñ';
+                return 'ï¿½ï¿½';
             case 'O':
-                return '¤À';
+                return 'ï¿½ï¿½';
             case 'o':
-                return '¤À';
+                return 'ï¿½ï¿½';
             case 'P':
-                return '¤Ä';
+                return 'ï¿½ï¿½';
             case 'p':
-                return '¤Ä';
+                return 'ï¿½ï¿½';
             case 'L':
-                return '¤Ó';
+                return 'ï¿½ï¿½';
             case 'l':
-                return '¤Ó';
+                return 'ï¿½ï¿½';
             default:
                 return _text.text[0];
         }

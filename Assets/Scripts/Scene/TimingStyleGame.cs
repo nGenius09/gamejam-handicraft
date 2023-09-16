@@ -7,27 +7,23 @@ public class TimingStyleGame : BaseGame
     protected bool isPlaying;
     protected override void StartGame()
     {
+        base.StartGame();
         isPlaying = true;
     }
 
     protected override void FinishGame()
     {
-        throw new System.NotImplementedException();
+        base.FinishGame();
     }
 
     protected override int GetResult()
     {
-        throw new System.NotImplementedException();
+        return base.GetResult();
     }
 
     protected override bool UpdateGame()
     {
-        if (isPlaying && Input.GetKeyDown(KeyCode.Space))
-        {
-            StopAndCheckTiming();
-        }
-        
-        return true;
+        return base.UpdateGame();
     }
 
     protected virtual void StopAndCheckTiming()

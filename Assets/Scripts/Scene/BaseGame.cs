@@ -7,11 +7,27 @@ public abstract class BaseGame : MonoBehaviour
 {
     [FormerlySerializedAs("gameName")] [SerializeField] private GameManager.GameMode gameMode;
     private float gameTime;
-    
-    protected abstract void StartGame();
-    protected abstract void FinishGame();
-    protected abstract int GetResult();
-    protected abstract bool UpdateGame();
+
+    protected virtual void StartGame()
+    {
+        GameManager.Instance.OnStartGame?.Invoke();
+    }
+
+    protected virtual void FinishGame()
+    {
+        GameManager.Instance.OnFinishGame?.Invoke();
+    }
+
+    protected virtual int GetResult()
+    {
+        return 0;
+    }
+
+    protected virtual bool UpdateGame()
+    {
+        GameManager.Instance.OnUpdateTime?.Invoke(1 - gameTime / 10f);
+        return true;
+    }
 
     void Awake()
     {

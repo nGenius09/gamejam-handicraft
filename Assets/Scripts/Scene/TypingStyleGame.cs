@@ -2,12 +2,12 @@ public class TypingStyleGame : BaseGame
 {
     protected override void StartGame()
     {
-        throw new System.NotImplementedException();
+        base.StartGame();
     }
 
     protected override void FinishGame()
     {
-        throw new System.NotImplementedException();
+        base.FinishGame();
     }
 
     protected override int GetResult()
@@ -17,6 +17,6 @@ public class TypingStyleGame : BaseGame
 
     protected override bool UpdateGame()
     {
-        throw new System.NotImplementedException();
+        return base.UpdateGame();
     }
 }

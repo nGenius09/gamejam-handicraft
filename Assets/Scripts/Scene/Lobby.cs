@@ -7,8 +7,33 @@ public class Lobby : MonoBehaviour
 {
     [SerializeField] private Button startBtn;
     [SerializeField] private Button collectionBtn;
+    [SerializeField] private TimeBar timeBar;
     [SerializeField] private GameObject settingPopup;
+
+    private void Awake()
+    {
+        timeBar.gameObject.SetActive(false);
+        
+        GameManager.Instance.SetStartGameHandler(OnStartGame);
+        GameManager.Instance.SetUpdateTimeHandler(OnUpdateTime);
+        GameManager.Instance.SetFinishGameHandler(OnFinishGame);
+    }
+
+    private void OnStartGame()
+    {
+        timeBar.gameObject.SetActive(true);
+    }
+
+    private void OnUpdateTime(float rate)
+    {
+        timeBar.SetFillAmount(rate);
+    }
     
+    private void OnFinishGame()
+    {
+        timeBar.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
         var isOpen = SceneManager.sceneCount > 1;

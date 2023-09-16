@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,16 @@ public class GameManager
     public static GameManager Instance { get; } = new GameManager();
 
     public GameMode CurrentMode { get; private set; }
+    
+    public Action OnStartGame { get; private set; }
+    public Action<float> OnUpdateTime { get; private set; }
+    public Action OnFinishGame { get; private set; }
+
+    ~GameManager()
+    {
+        OnStartGame = null;
+        OnUpdateTime = null;
+    }
     
     /// <summary>
     /// For Test
@@ -38,5 +49,20 @@ public class GameManager
     {
         var op = SceneManager.UnloadSceneAsync($"2.{gameMode}");
         CurrentMode = GameMode.None;
+    }
+    
+    public void SetStartGameHandler(Action onStartGame)
+    {
+        this.OnStartGame += onStartGame;
+    }
+
+    public void SetUpdateTimeHandler(Action<float> onUpdateTime)
+    {
+        this.OnUpdateTime += onUpdateTime;
+    }
+
+    public void SetFinishGameHandler(Action onFinishGame)
+    {
+        this.OnFinishGame += onFinishGame;
     }
 }
