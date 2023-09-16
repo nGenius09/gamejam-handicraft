@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class FluidTimingStyleGame : TimingStyleGame
     private List<GameObject> particles = new List<GameObject>();
     
     private bool pressSpace;
+
+    public GameObject SpaceObj;
 
     protected override void StartGame()
     {
@@ -44,6 +47,7 @@ public class FluidTimingStyleGame : TimingStyleGame
         {
             if (Input.GetKey(KeyCode.Space))
             {
+                SpaceObj.SetActive(false);
                 deltaTime += Time.deltaTime * speed;
                 if (deltaTime > 0.01f)
                 {
@@ -56,6 +60,7 @@ public class FluidTimingStyleGame : TimingStyleGame
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
+                SpaceObj.SetActive(true);
                 pressSpace = true;
                 Invoke("StopAndCheckTiming", 2.5f);
             }
