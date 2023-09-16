@@ -4763,7 +4763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 1
   nextMode: 2
-  limitTime: 60
+  limitTime: 15
   _area: {fileID: 61395790}
   _block: {fileID: 714434660}
   _comboText: {fileID: 1662993587}
@@ -4771,7 +4771,7 @@ MonoBehaviour:
   _fever: {fileID: 1501249364}
   _feverRect: {fileID: 898627336}
   _feverLetter: {fileID: 103563208}
-  ComboTime: 2
+  ComboTime: 1.6
   timeBar: {fileID: 2073976305}
 --- !u!212 &1871916641
 SpriteRenderer:

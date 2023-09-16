@@ -71,7 +71,7 @@ public class CarveGameScene : BaseGame
     private void Init()
     {
         Divide_Letter(new StringBuilder(DataManager.Instance.DataTable[0].Letter));
-        CheckDuplicate(45, 6);
+        CheckDuplicate(25,12);
         _appearLetterSearchChar.Clear();
         MakeKeyCodeNCharTable();
 
