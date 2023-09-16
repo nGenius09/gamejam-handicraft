@@ -1,11 +1,14 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Resources;
 using System.Text;
 using System.Threading;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarveGameScene : BaseGame
 {
@@ -35,6 +38,13 @@ public class CarveGameScene : BaseGame
     private BlockPooling _block;
     [SerializeField]
     private ComboText _comboText;
+    [SerializeField]
+    private Image _failImg;
+    [SerializeField]
+    private Image _fever;
+    [SerializeField]
+    private RectTransform _feverRect;
+    private Sequence _feverSeq;
 
     public float ComboTime = 1;
     private float _curComboTime;
@@ -42,19 +52,34 @@ public class CarveGameScene : BaseGame
     [SerializeField] private TimeBar timeBar;
 
     private int _combo;
+    private int _wrongCount;
+    private int _feverCount;
 
     private CancellationTokenSource _cts = new CancellationTokenSource();
     private IDisposable _checkInput;
+    private IDisposable _checkFail;
     
     protected override void StartGame()
     {
         base.StartGame();
-        
-        Divide_Letter(new StringBuilder("동창이 밝았느냐"));
+        Init();
+        //TickTime().Forget();
+    }
+
+    private void Init()
+    {
+        Divide_Letter(new StringBuilder(DataManager.Instance.DataTable[0].Letter));
         CheckDuplicate(45, 6);
         _appearLetterSearchChar.Clear();
         MakeKeyCodeNCharTable();
-        
+
+        _feverSeq = DOTween.Sequence()
+                .AppendCallback(() => _fever.gameObject.SetActive(true))
+                .Append(_feverRect.DOScale(new Vector3(1.2f, 1.2f, 1), 0.25f))
+                .Join(_fever.DOColor(Color.white, 0.25f))
+                .SetAutoKill(false)
+                .Pause();
+
         StringBuilder str = new StringBuilder(5);
 
         for (int i = 0; i < 5; ++i)
@@ -64,16 +89,27 @@ public class CarveGameScene : BaseGame
         _block.Init(_nonDuplicateString.Length);
         _comboText.Init();
         _curComboTime = ComboTime;
-        Debug.Log($"{_curComboTime} {ComboTime}");
         CheckComboTime().Forget();
-        _checkInput =  this.UpdateAsObservable().Subscribe(_ => CheckInput());
-        //TickTime().Forget();
+        _checkInput = this.UpdateAsObservable().Subscribe(_ => CheckInput());
+        _checkFail = this.UpdateAsObservable().Subscribe(_ => {
+            if (gameTime >= limitTime)
+            {
+                FinishGame(false);
+            }
+        });
     }
 
-    protected override void FinishGame()
+    protected override void FinishGame(bool bSuccess = true)
     {
+        //스코어
+        int Score = (int)(limitTime - gameTime - _wrongCount + _feverCount);
         Clear();
-        base.FinishGame();
+        if (!bSuccess)
+        {
+            _failImg.gameObject.SetActive(true);
+        }
+
+        base.FinishGame(bSuccess);
     }
     
     protected override bool UpdateGame()
@@ -125,12 +161,25 @@ public class CarveGameScene : BaseGame
         }
     }
 
+    private void FeverEffect(bool bSuccess)
+    {
+        if (bSuccess) 
+            _feverSeq.Restart();
+
+        else
+        {
+            _feverSeq.Pause();
+            _feverRect.localScale = new Vector3(1, 1, 1);
+            _fever.gameObject.SetActive(false);
+        }
+    }
+
     private void CheckInput()
     {
         //Input.inputString
         foreach(KeyCode key in _keyCodeNCharPair.Keys)
         {
-            if (Input.GetKeyDown(key))
+            if (Input.GetKeyDown(key) && Time.timeScale != 0)
             {
                 if (_nonDuplicateString[_stringPointer] == _keyCodeNCharPair[key])
                 {
@@ -139,12 +188,17 @@ public class CarveGameScene : BaseGame
                     ++_stringPointer;
                     ++_combo;
                     _curComboTime = ComboTime;
+                    
+                    if (_combo == 10)
+                    {
+                        FeverEffect(true);
+                    }
+
                     _block.SetBlock(_stringPointer);
                     _comboText.GetInput(_combo);
 
                     if (_nonDuplicateString.Length == _stringPointer)
                     {
-                        //���� ��!
                         FinishGame();
                     }
 
@@ -165,6 +219,8 @@ public class CarveGameScene : BaseGame
                     SetTime(gameTime + 5);
                     _combo = 0;
                     _comboText.GetInput(_combo);
+                    ++_wrongCount;
+                    FeverEffect(false);
                     Debug.Log($"input is {_keyCodeNCharPair[key]} curLetter is {_nonDuplicateString[_stringPointer]}, Fail");
                     //����!
                 }
@@ -283,6 +339,7 @@ public class CarveGameScene : BaseGame
         _area.Clear();
         _checkInput.Dispose();
         _comboText.Clear();
+        _checkFail.Dispose();
     }
 
     private void MakeKeyCodeNCharTable()

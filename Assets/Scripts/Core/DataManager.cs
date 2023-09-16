@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 public class DataManager
 {
     public Dictionary<int, Data> DataTable { get => _dataTable; }
     private Dictionary<int, Data> _dataTable;
+
 
     public static DataManager Instance
     {

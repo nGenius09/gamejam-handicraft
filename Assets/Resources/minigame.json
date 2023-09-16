@@ -1,4 +1,4 @@
-{
+﻿{
   "data": [
     {
       "ID": "0",
@@ -6,7 +6,8 @@
       "Score": "10",
       "TimeLimit": "30",
       "LetterTypeCount": "4",
-      "LetterLength": "25"
+      "LetterLength": "25",
+      "Letter": "나는 이 나라의 최후의 금속활자장이다..."
     },
     {
       "ID": "1",
@@ -30,7 +31,8 @@
       "Score": "20",
       "TimeLimit": "40",
       "LetterTypeCount": "8",
-      "LetterLength": "35"
+      "LetterLength": "35",
+      "Letter": "모두가 사라지고 나만이 남았다."
     },
     {
       "ID": "4",
@@ -54,7 +56,8 @@
       "Score": "30",
       "TimeLimit": "50",
       "LetterTypeCount": "7",
-      "LetterLength": "50"
+      "LetterLength": "50",
+      "Letter": "금속활자장으로서 책을 지킨다. 최후의 하나로서 자리를 지킨다."
     },
     {
       "ID": "7",
@@ -78,7 +81,8 @@
       "Score": "40",
       "TimeLimit": "55",
       "LetterTypeCount": "9",
-      "LetterLength": "60"
+      "LetterLength": "60",
+      "Letter": "금속활자장의 책임을, 최후의 의무를 다 해야 한다."
     },
     {
       "ID": "10",
@@ -102,7 +106,8 @@
       "Score": "50",
       "TimeLimit": "55",
       "LetterTypeCount": "12",
-      "LetterLength": "75"
+      "LetterLength": "75",
+      "Letter": "그것이 어떤 방법이라고 할지라도."
     },
     {
       "ID": "13",
@@ -126,7 +131,8 @@
       "Score": "60",
       "TimeLimit": "55",
       "LetterTypeCount": "15",
-      "LetterLength": "100"
+      "LetterLength": "100",
+      "Letter": "어떤 대가를 치르게 될지라도."
     },
     {
       "ID": "16",

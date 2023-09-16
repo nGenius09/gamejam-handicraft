@@ -5,7 +5,7 @@ public class TypingStyleGame : BaseGame
         base.StartGame();
     }
 
-    protected override void FinishGame()
+    protected override void FinishGame(bool bSuccess = true)
     {
         base.FinishGame();
     }
