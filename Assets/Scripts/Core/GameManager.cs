@@ -35,27 +35,38 @@ public class GameManager
     public void LoadLobby()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("1.Lobby");
-        CurrentMode = GameMode.None;
+        
+        Fade.StartFade(1.5f, () =>
+        {
+            SceneManager.LoadScene("1.Lobby");
+            CurrentMode = GameMode.None;
+        });
     }
 
     public void StartGame(GameMode gameMode)
     {
-        SceneManager.LoadScene($"2.{gameMode}", LoadSceneMode.Additive);
-        CurrentMode = gameMode;
-    }
-    
-    public void FinishGame(GameMode gameMode, GameMode nextMode)
-    {
-        var op = SceneManager.UnloadSceneAsync($"2.{gameMode}");
-        if (nextMode != GameMode.None)
+        Fade.StartFade(1f, () =>
         {
-            StartGame(nextMode);
+            SceneManager.LoadScene($"2.{gameMode}", LoadSceneMode.Additive);
+            CurrentMode = gameMode;
+        });
+    }
+
+    public void StartGameImmediately(GameMode gameMode)
+    {
+        if (gameMode != GameMode.None)
+        {
+            SceneManager.LoadScene($"2.{gameMode}", LoadSceneMode.Additive);
         }
         else
         {
             CurrentMode = GameMode.None;
         }
+    }
+    
+    public void FinishGame(GameMode gameMode, GameMode nextMode)
+    {
+        Fade.StartFinishFade(gameMode, nextMode);
     }
     
     public void SetStartGameHandler(Action onStartGame)

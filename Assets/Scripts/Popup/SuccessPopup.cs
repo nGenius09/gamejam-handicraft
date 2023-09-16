@@ -1,7 +1,9 @@
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class SuccessPopup : FinishActionPopup
 {
