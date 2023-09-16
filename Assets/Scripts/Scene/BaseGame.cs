@@ -21,10 +21,13 @@ public abstract class BaseGame : MonoBehaviour
         GameManager.Instance.OnStartGame?.Invoke();
     }
 
-    protected virtual void FinishGame()
+    protected virtual void FinishGame(bool bSuccess = true)
     {
         GameManager.Instance.OnFinishGame?.Invoke();
-        GameManager.Instance.FinishGame(gameMode, nextMode);
+        if (bSuccess)
+            GameManager.Instance.FinishGame(gameMode, nextMode);
+        else
+            GameManager.Instance.FinishGame(gameMode, GameManager.GameMode.None);
     }
 
     protected virtual int GetResult()

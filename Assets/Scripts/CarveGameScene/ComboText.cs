@@ -16,16 +16,20 @@ public class ComboText : MonoBehaviour
     public float _keepTime = 1;
     public float _curtime = 1;
 
+    private readonly Color _red = new Color((float)0xB3 / 255, (float)0x21 / 255, (float)0x16 / 255, 1);
+    private readonly Color _fade = new Color((float)0xB3 / 255, (float)0x21 / 255, (float)0x16 / 255, 0);
+
     public void Init()
     {
         Fade().Forget();
+        _curtime = 0;
     }
 
     private async UniTaskVoid Fade()
     {
         while (true)
         {
-            _text.color = Color.Lerp(Color.clear, Color.black, _curtime / _keepTime);
+            _text.color = Color.Lerp(_fade, _red, _curtime / _keepTime);
             await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
             _curtime -= Time.deltaTime;
         }
@@ -36,12 +40,12 @@ public class ComboText : MonoBehaviour
         if (combo == 0)
         {
             _curtime = 0;
-            _text.text = $"Combo: {0}";
+            _text.text = $"{0} 연속..";
         }
         else
         {
             _curtime = _keepTime;
-            _text.text = $"Combo: {combo}";
+            _text.text = $"{combo} 연속!";
         }
     }
 

@@ -12,11 +12,11 @@ public struct Data
     public int TimeLimit;
     public int LetterTypeCount;
     public int LetterLength;
+    public string Letter;
 
     public void Load(out Dictionary<int, Data> data)
     {
         data = new Dictionary<int, Data>();
-
     }
 }
 
