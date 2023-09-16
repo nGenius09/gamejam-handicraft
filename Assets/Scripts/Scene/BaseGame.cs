@@ -29,7 +29,7 @@ public abstract class BaseGame : MonoBehaviour
         
         if (bSuccess)
         {
-            AccountManager.Instance.AddReputation(GetResult());
+            AccountManager.Instance.AddGamePoint(GetResult());
         }
         
         GameManager.Instance.OnFinishGame?.Invoke(bSuccess, gameMode, nextMode);

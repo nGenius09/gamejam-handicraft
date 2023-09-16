@@ -45,6 +45,8 @@ public class CarveGameScene : BaseGame
     [SerializeField]
     private RectTransform _feverRect;
     private Sequence _feverSeq;
+    [SerializeField]
+    private RectTransform _feverLetter;
 
     public float ComboTime = 1;
     private float _curComboTime;
@@ -167,16 +169,35 @@ public class CarveGameScene : BaseGame
         }
     }
 
+    private async UniTaskVoid ShakeFever(float time = 0.5f, float amount = 10f)
+    {
+        Vector2 startpos = _feverLetter.anchoredPosition;
+        _feverLetter.gameObject.SetActive(true);
+        while (time > 0.0f)
+        {
+            _feverLetter.anchoredPosition = startpos + new Vector2(UnityEngine.Random.Range(-amount, amount),
+                UnityEngine.Random.Range(-amount, amount));
+            await UniTask.DelayFrame(1, cancellationToken: _cts.Token);
+            _feverLetter.anchoredPosition = startpos;
+            time -= Time.deltaTime;
+        }
+        _feverLetter.gameObject.SetActive(false);
+    }
+
     private void FeverEffect(bool bSuccess)
     {
-        if (bSuccess) 
+        if (bSuccess)
+        {
             _feverSeq.Restart();
+            BgmPlayer.Bgm.BgmTrigger(null, 1.2f);
+        }
 
         else
         {
             _feverSeq.Pause();
             _feverRect.localScale = new Vector3(1, 1, 1);
             _fever.gameObject.SetActive(false);
+            BgmPlayer.Bgm.BgmTrigger(null, 1);
         }
     }
 
@@ -187,6 +208,7 @@ public class CarveGameScene : BaseGame
         {
             if (Input.GetKeyDown(key) && Time.timeScale != 0)
             {
+                SoundManager.Instance.Play2DSound(SFX.Keyboard);
                 if (_nonDuplicateString[_stringPointer] == _keyCodeNCharPair[key])
                 {
                     Debug.Log($"input is {_keyCodeNCharPair[key]}, Success");
@@ -199,6 +221,9 @@ public class CarveGameScene : BaseGame
                     {
                         FeverEffect(true);
                     }
+
+                    if (_combo >= 10 && _combo % 10 == 0)
+                        ShakeFever().Forget();
 
                     _block.SetBlock(_stringPointer);
                     _comboText.GetInput(_combo);
@@ -340,6 +365,7 @@ public class CarveGameScene : BaseGame
 
     public void Clear()
     {
+        FeverEffect(false);
         _cts.Cancel();
         _cts.Dispose();
         _area.Clear();
