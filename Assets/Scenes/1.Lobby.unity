@@ -855,6 +855,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingResetPopup: {fileID: 381098253}
   settingExitPopup: {fileID: 827329414}
+  bgmSlider: {fileID: 1090304386}
+  SFXSlider: {fileID: 1619820802}
 --- !u!114 &297977023
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -189,6 +189,7 @@ public class CarveGameScene : BaseGame
         if (bSuccess)
         {
             _feverSeq.Restart();
+            BgmPlayer.Bgm.BgmTrigger(null, 1.2f);
         }
 
         else
@@ -196,6 +197,7 @@ public class CarveGameScene : BaseGame
             _feverSeq.Pause();
             _feverRect.localScale = new Vector3(1, 1, 1);
             _fever.gameObject.SetActive(false);
+            BgmPlayer.Bgm.BgmTrigger(null, 1);
         }
     }
 
@@ -206,6 +208,7 @@ public class CarveGameScene : BaseGame
         {
             if (Input.GetKeyDown(key) && Time.timeScale != 0)
             {
+                SoundManager.Instance.Play2DSound(SFX.Keyboard);
                 if (_nonDuplicateString[_stringPointer] == _keyCodeNCharPair[key])
                 {
                     Debug.Log($"input is {_keyCodeNCharPair[key]}, Success");

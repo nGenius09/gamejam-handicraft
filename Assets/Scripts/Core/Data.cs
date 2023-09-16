@@ -32,3 +32,17 @@ public class DataLoad
             dic.Add(data[i].ID, data[i]);
     }
 }
+
+
+[Serializable]
+public struct SoundVolume
+{
+    public float BGM;
+    public float Effect;
+
+    public SoundVolume(float bgm = 0.5f, float effect = 0.5f)
+    {
+        BGM = bgm;
+        Effect = effect;
+    }
+}
