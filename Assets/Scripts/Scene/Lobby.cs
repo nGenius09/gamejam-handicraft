@@ -33,9 +33,9 @@ public class Lobby : MonoBehaviour
 
     private void Update()
     {
-        var isOpen = SceneManager.sceneCount > 1;
-        startBtn.gameObject.SetActive(isOpen == false);
-        collectionBtn.gameObject.SetActive(isOpen == false);
+        // var isOpen = SceneManager.sceneCount > 1;
+        // startBtn.gameObject.SetActive(isOpen == false);
+        // collectionBtn.gameObject.SetActive(isOpen == false);
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -53,6 +53,16 @@ public class Lobby : MonoBehaviour
     public void OnClickStart()
     {
         GameManager.Instance.StartGame(GameManager.GameMode.Game1);
+    }
+
+    public void OnClickCollection()
+    {
+        
+    }
+
+    public void OnClickAchievement()
+    {
+        
     }
 
     public void OnClickSetting()
