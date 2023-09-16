@@ -7,7 +7,7 @@ public class Lobby : MonoBehaviour
 {
     [SerializeField] private Button startBtn;
     [SerializeField] private Button collectionBtn;
-    [SerializeField] private GameObject settingPopup;
+    [SerializeField] private SettingPopup settingPopup;
 
     private void Awake()
     {
@@ -36,6 +36,18 @@ public class Lobby : MonoBehaviour
         var isOpen = SceneManager.sceneCount > 1;
         startBtn.gameObject.SetActive(isOpen == false);
         collectionBtn.gameObject.SetActive(isOpen == false);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!settingPopup.IsActive())
+            {
+                settingPopup.Show();
+            }
+            else
+            {
+                settingPopup.OnClickClose();
+            }
+        }
     }
 
     public void OnClickStart()
@@ -45,6 +57,6 @@ public class Lobby : MonoBehaviour
 
     public void OnClickSetting()
     {
-        settingPopup.SetActive(true);
+        settingPopup.Show();
     }
 }
