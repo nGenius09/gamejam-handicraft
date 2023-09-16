@@ -10,6 +10,7 @@ public abstract class BaseGame : MonoBehaviour
     [SerializeField] protected int limitTime;
     protected float gameTime { get; private set; }
     public bool IsPlaying { get; private set; }
+    protected Data _curGameData;
 
     protected void SetTime(float gameTime)
     {
@@ -21,6 +22,13 @@ public abstract class BaseGame : MonoBehaviour
         gameTime = 0;
         IsPlaying = true;
         GameManager.Instance.OnStartGame?.Invoke();
+        
+        if (gameMode != GameManager.GameMode.None)
+        {
+            int datanumber = AccountManager.Instance.collections.Count > 5 ?
+        UnityEngine.Random.Range(0, 6) : AccountManager.Instance.collections.Count;
+            _curGameData = DataManager.Instance.DataTable[datanumber * 3 + (int)(gameMode) - 1];
+        }
     }
 
     protected virtual void FinishGame(bool bSuccess = true)

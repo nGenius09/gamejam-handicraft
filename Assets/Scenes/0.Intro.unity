@@ -3645,7 +3645,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3827,7 +3827,7 @@ MonoBehaviour:
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
   delay: 0.1
-  duration: 1.4
+  duration: 0.8
   easeType: 24
   easeCurve:
     serializedVersion: 2

@@ -15,7 +15,6 @@ public class CAudio
 
     private void InitVolume(Scene prev, Scene next)
     {
-        Debug.Log($"In {prev.name} {next.name}");
         if (_audioSource != null)
             switch (_type)
             {

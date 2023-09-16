@@ -47,6 +47,10 @@ public class CarveGameScene : BaseGame
     private Sequence _feverSeq;
     [SerializeField]
     private RectTransform _feverLetter;
+    [SerializeField]
+    private TextPooling _textPool;
+    [SerializeField]
+    private Pen _pen;
 
     public float ComboTime = 1;
     private float _curComboTime;
@@ -60,7 +64,7 @@ public class CarveGameScene : BaseGame
     private CancellationTokenSource _cts = new CancellationTokenSource();
     private IDisposable _checkInput;
     private IDisposable _checkFail;
-    
+
     protected override void StartGame()
     {
         base.StartGame();
@@ -70,10 +74,16 @@ public class CarveGameScene : BaseGame
 
     private void Init()
     {
-        Divide_Letter(new StringBuilder(DataManager.Instance.DataTable[0].Letter));
-        CheckDuplicate(25,12);
+        int datanumber = AccountManager.Instance.collections.Count > 5 ?
+            UnityEngine.Random.Range(0, 6) : AccountManager.Instance.collections.Count;
+        _curGameData = DataManager.Instance.DataTable[datanumber * 3];
+        Divide_Letter(new StringBuilder(_curGameData.Letter));
+        CheckDuplicate(_curGameData.LetterLength, _curGameData.LetterTypeCount);
+        limitTime = _curGameData.TimeLimit;
         _appearLetterSearchChar.Clear();
         MakeKeyCodeNCharTable();
+        _textPool.Init();
+        _pen.Init();
 
         _feverSeq = DOTween.Sequence()
                 .AppendCallback(() => _fever.gameObject.SetActive(true))
@@ -116,7 +126,7 @@ public class CarveGameScene : BaseGame
 
     protected override int GetResult()
     {
-        int Score = (int)(limitTime - gameTime - _wrongCount + _feverCount);
+        int Score = (int)(limitTime - gameTime - _wrongCount + (_feverCount << 1) + _curGameData.Score);
         return Score;
     }
 
@@ -141,7 +151,6 @@ public class CarveGameScene : BaseGame
     {
         Transform t = timeBar.GetComponent<Transform>();
         Vector2 startpos = t.position;
-        Debug.Log(startpos);
         while (time > 0.0f)
         {
             t.position = startpos + new Vector2(UnityEngine.Random.Range(-amount, amount),
@@ -211,19 +220,24 @@ public class CarveGameScene : BaseGame
                 SoundManager.Instance.Play2DSound(SFX.Keyboard);
                 if (_nonDuplicateString[_stringPointer] == _keyCodeNCharPair[key])
                 {
-                    Debug.Log($"input is {_keyCodeNCharPair[key]}, Success");
                     _area.ActiveImageEffect(_stringPointer % 5);
+                    _pen.GetNumber(_stringPointer % 5);
                     ++_stringPointer;
                     ++_combo;
                     _curComboTime = ComboTime;
+                    SoundManager.Instance.Play2DSound(SFX.Shave);
                     
-                    if (_combo == 10)
+                    if (_combo == 5)
                     {
                         FeverEffect(true);
                     }
 
-                    if (_combo >= 10 && _combo % 10 == 0)
-                        ShakeFever().Forget();
+                    if (_combo >= 5)
+                    {
+                        if (_combo % 5 == 0)
+                            ShakeFever().Forget();
+                        _textPool.FeverEffect();
+                    }
 
                     _block.SetBlock(_stringPointer);
                     _comboText.GetInput(_combo);
@@ -247,13 +261,12 @@ public class CarveGameScene : BaseGame
                 else
                 {
                     ShakeSlider().Forget();
-                    SetTime(gameTime + 5);
+                    SetTime(gameTime + 3);
                     _combo = 0;
                     _comboText.GetInput(_combo);
                     ++_wrongCount;
                     FeverEffect(false);
-                    Debug.Log($"input is {_keyCodeNCharPair[key]} curLetter is {_nonDuplicateString[_stringPointer]}, Fail");
-                    //����!
+                    SoundManager.Instance.Play2DSound(SFX.Wrong);
                 }
             }
         }
@@ -310,8 +323,6 @@ public class CarveGameScene : BaseGame
 
             _nonDuplicateString.Append(curLetter);
         }
-        Debug.Log($"Letter is {_nonDuplicateString.ToString()}");
-
     }
 
     private void Divide_Letter(string str)
