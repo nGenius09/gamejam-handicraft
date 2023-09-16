@@ -12,10 +12,15 @@ public class AreaPooling : MonoBehaviour
     private readonly Vector2 _curAreaPos = new Vector2(0, -200);
     private readonly Vector2 _nextAreaPos = new Vector2(1360, -200);
 
+    private Sprite[] _sprites;
+
     public void Init(string str)
     {
+        _sprites = Resources.LoadAll<Sprite>("");
         for (int i = 0; i < transform.childCount; ++i)
+        {
             _offArea.Enqueue(transform.GetChild(i).GetComponent<TypingArea>());
+        }
 
         ActiveArea(str);
         _activeArea.Peek().MoveToTargetPos(_curAreaPos);
