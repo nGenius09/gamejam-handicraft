@@ -17,6 +17,7 @@ public class FluidTimingStyleGame : TimingStyleGame
     private float deltaTime;
     private float speed = 1f;
     private List<GameObject> particles = new List<GameObject>();
+    
     private bool pressSpace;
 
     protected override void StartGame()

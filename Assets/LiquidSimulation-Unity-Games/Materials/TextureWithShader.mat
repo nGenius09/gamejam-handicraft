@@ -75,12 +75,12 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Stroke: 0.48
+    - _Stroke: 0.589
     - _Stroke2: 0.1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.27964056, b: 0, a: 0.28235295}
+    - _Color: {r: 1, g: 0.69559526, b: 0, a: 0.28235295}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _StrokeColor: {r: 0.9716981, g: 0.22459057, b: 0.22459057, a: 0.48235294}
     - _StrokeColor2: {r: 1, g: 1, b: 1, a: 0.53333336}
