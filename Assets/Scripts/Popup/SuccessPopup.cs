@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class SuccessPopup : FinishActionPopup
 {
@@ -15,13 +14,11 @@ public class SuccessPopup : FinishActionPopup
     {
         base.Show();
 
-        var id = Mathf.Clamp(AccountManager.Instance.gamePoint / 10 + 1, 1, 5);
-
-        image.sprite = atlas.GetSprite($"Result{id}");
+        var id2 = Mathf.Clamp(AccountManager.Instance.gamePoint / 100 + 1, 1, 35);
+        var book = DataManager.Instance.GetCompleteBook(id2);
+        comment.text = book.Txt;
+        image.sprite = atlas.GetSprite($"Result{book.Level}");
         
-        var id2 = Mathf.Clamp(AccountManager.Instance.gamePoint / 3 + 1, 1, 35);
-        comment.text = DataManager.Instance.GetCompleteBook(id2).Txt;
-        
-        AccountManager.Instance.AddCollection(id);
+        AccountManager.Instance.AddCollection(id2);
     }
 }

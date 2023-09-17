@@ -13,7 +13,7 @@ public class CutScene : MonoBehaviour
     {
         if (currentIndex >= pages.Length)
         {
-            GameManager.Instance.LoadLobby();
+            GoToLobby();
             return;
         }
         
@@ -29,5 +29,10 @@ public class CutScene : MonoBehaviour
     public void OnClickGoToLobby()
     {
         GoToNextPage();
+    }
+
+    protected virtual void GoToLobby()
+    {
+        GameManager.Instance.LoadLobby();
     }
 }

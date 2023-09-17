@@ -9,6 +9,13 @@ public class AccountManager
     public List<int> collections { get; private set; } = new List<int>();
     public List<int> achievements { get; private set; } = new List<int>();
 
+    public bool hasEnding { get; private set; }
+
+    public void ResetPoint()
+    {
+        this.gamePoint = 0;
+    }
+ 
     public void AddGamePoint(int gamePoint)
     {
         this.gamePoint += gamePoint;
@@ -32,5 +39,10 @@ public class AccountManager
     public void Save()
     {
         
+    }
+
+    public void SaveEnding()
+    {
+        hasEnding = true;
     }
 }

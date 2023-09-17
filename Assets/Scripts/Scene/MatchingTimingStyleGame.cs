@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.U2D;
 
 public class MatchingTimingStyleGame : TimingStyleGame
@@ -19,6 +20,7 @@ public class MatchingTimingStyleGame : TimingStyleGame
     
     [SerializeField] private GameObject[] lifeObjects;
     [SerializeField] private int life;
+    [FormerlySerializedAs("lifeCount")] [SerializeField] private int decreaseLifeCount;
 
     private float baseLineY;
     private float[] blockSpeeds;
@@ -83,9 +85,10 @@ public class MatchingTimingStyleGame : TimingStyleGame
         {
             blocks[blockIndex].GetComponent<SpriteRenderer>().color = Color.gray;
 
-            if (blockIndex < lifeObjects.Length)
+            if (decreaseLifeCount < lifeObjects.Length)
             {
-                lifeObjects[blockIndex].SetActive(false);
+                lifeObjects[decreaseLifeCount].SetActive(false);
+                decreaseLifeCount++;
             }
         }
         

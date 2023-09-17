@@ -28,6 +28,7 @@ public class GameManager
     public void ResetAll()
     {
         Time.timeScale = 1;
+        AccountManager.Instance.ResetPoint();
         SceneManager.LoadScene("0.Intro");
         CurrentMode = GameMode.None;
     }
@@ -35,6 +36,8 @@ public class GameManager
     public void LoadLobby()
     {
         Time.timeScale = 1;
+        
+        AccountManager.Instance.ResetPoint();
         
         Fade.StartFade(1.5f, () =>
         {
