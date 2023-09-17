@@ -15,8 +15,8 @@ public enum SFX
     Meow,
     Page,
     Ppok,
-    SSG,
     Shave,
+    SSG,
     Stamp,
     Success,
     Wrong
