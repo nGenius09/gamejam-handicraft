@@ -16,6 +16,9 @@ public class MatchingTimingStyleGame : TimingStyleGame
     [SerializeField] private float cutline;
     
     [SerializeField] private TimeBar timeBar;
+    
+    [SerializeField] private GameObject[] lifeObjects;
+    [SerializeField] private int life;
 
     private float baseLineY;
     private float[] blockSpeeds;
@@ -74,14 +77,21 @@ public class MatchingTimingStyleGame : TimingStyleGame
     
     protected override void StopAndCheckTiming()
     {
-        if (!IsSuccess(blockIndex))
+        var isSuccess = IsSuccess(blockIndex);
+        
+        if (!isSuccess)
         {
             blocks[blockIndex].GetComponent<SpriteRenderer>().color = Color.gray;
+
+            if (blockIndex < lifeObjects.Length)
+            {
+                lifeObjects[blockIndex].SetActive(false);
+            }
         }
         
         blockIndex++;
         
-        if (blockIndex >= blocks.Length)
+        if (blockIndex >= blocks.Length || !IsAllSuccess())
         {
             FinishGame(IsAllSuccess());
         }
@@ -111,6 +121,6 @@ public class MatchingTimingStyleGame : TimingStyleGame
             }
         }
 
-        return failCount < 3;
+        return failCount < life;
     }
 }

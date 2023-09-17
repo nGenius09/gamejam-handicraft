@@ -42,6 +42,17 @@ public class GameManager
             CurrentMode = GameMode.None;
         });
     }
+    
+    public void LoadEnding()
+    {
+        Time.timeScale = 1;
+        
+        Fade.StartFade(2.5f, () =>
+        {
+            SceneManager.LoadScene("99.Ending");
+            CurrentMode = GameMode.None;
+        });
+    }
 
     public void StartGame(GameMode gameMode)
     {

@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup canvasGroup;
+    
     [SerializeField] private SettingPopup settingPopup;
     [SerializeField] private SuccessPopup successPopup;
     [SerializeField] private FailPopup failPopup;
@@ -14,6 +19,12 @@ public class Lobby : MonoBehaviour
     [SerializeField] private GameObject[] achievementObjects;
     [SerializeField] private GameObject[] collectionObjects;
     [SerializeField] private TextMeshProUGUI collectionCount;
+
+    [SerializeField] private Image craftTitle;
+    [SerializeField] private Sprite craftSprite;
+    [SerializeField] private Sprite endingSprite;
+
+    private bool normalCraftEnter;
 
     private void Awake()
     {
@@ -68,11 +79,13 @@ public class Lobby : MonoBehaviour
 
     private void RefreshRewardObjects()
     {
+        var completeBookCount = 6;//DataManager.Instance.GetCompleteBooks().Count();
+
         var achievements = AccountManager.Instance.achievements;
         for (int i = 0; i < this.achievementObjects.Length; i++)
         {
-            this.achievementObjects[i].SetActive(i < achievements.Count);
-        }
+            this.achievementObjects[i].SetActive((i == 1 || i == 3 || i == 5));
+}
         
         var collections = AccountManager.Instance.collections;
         for (int i = 0; i < this.collectionObjects.Length; i++)
@@ -80,14 +93,17 @@ public class Lobby : MonoBehaviour
             this.collectionObjects[i].SetActive(i < collections.Count);
         }
 
-        collectionCount.text = $"{collections.Count}/6";
+        collectionCount.text = $"{collections.Count}/{completeBookCount}";
+
+        normalCraftEnter = collections.Count != completeBookCount;
+        craftTitle.sprite = normalCraftEnter ? craftSprite : endingSprite;
     }
 
     private void Update()
     {
-        // var isOpen = SceneManager.sceneCount > 1;
-        // startBtn.gameObject.SetActive(isOpen == false);
-        // collectionBtn.gameObject.SetActive(isOpen == false);
+        var isLoadedGame = SceneManager.sceneCount > 1;
+        canvasGroup.interactable = !isLoadedGame;
+        canvasGroup.blocksRaycasts = !isLoadedGame;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -115,7 +131,14 @@ public class Lobby : MonoBehaviour
 
     public void OnClickStart()
     {
-        GameManager.Instance.StartGame(GameManager.GameMode.Game1);
+        if (normalCraftEnter)
+        {
+            GameManager.Instance.StartGame(GameManager.GameMode.Game1);
+        }
+        else
+        {
+            GameManager.Instance.LoadEnding();
+        }
     }
 
     public void OnClickCollection()

@@ -78,7 +78,7 @@ public class CarveGameScene : BaseGame
     {
         int datanumber = AccountManager.Instance.collections.Count > 5 ?
             UnityEngine.Random.Range(0, 6) : AccountManager.Instance.collections.Count;
-        _curGameData = DataManager.Instance.DataTable[datanumber * 3];
+        _curGameData = DataManager.Instance.GetData(datanumber * 3);
         Divide_Letter(new StringBuilder(_curGameData.Letter));
         CheckDuplicate(_curGameData.LetterLength, _curGameData.LetterTypeCount);
         _appearLetterSearchChar.Clear();

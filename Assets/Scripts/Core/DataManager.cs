@@ -6,15 +6,9 @@ using UnityEngine;
 
 public class DataManager
 {
-    public Dictionary<int, Data> DataTable { get => _dataTable; }
     private Dictionary<int, Data> _dataTable;
-
-    public Dictionary<int, Achive> AchiveTable { get => _achiveTable; }
-    private Dictionary<int, Achive> _achiveTable;
-
-    public Dictionary<int, CompleteBook> CompleteBookTable { get => _completeBookTable; }
+    private Dictionary<int, Achievement> _achievementTable;
     private Dictionary<int, CompleteBook> _completeBookTable;
-
 
     public static DataManager Instance
     {
@@ -28,13 +22,41 @@ public class DataManager
 
     private static DataManager d_instance;
 
-    public DataManager()
+    private DataManager()
     {
         TextAsset data = Resources.Load<TextAsset>("minigame");
         JsonUtility.FromJson<DataLoad>(data.text).Load(out _dataTable);
         data = Resources.Load<TextAsset>("Todolist (2)");
-        JsonUtility.FromJson<AchiveLoad>(data.text).Load(out _achiveTable);
+        JsonUtility.FromJson<AchievementLoad>(data.text).Load(out _achievementTable);
         data = Resources.Load<TextAsset>("CompleteBook");
         JsonUtility.FromJson<BookLoad>(data.text).Load(out _completeBookTable);
+    }
+
+    public Data GetData(int id)
+    {
+        _dataTable.TryGetValue(id, out var data);
+        return data;
+    }
+
+    public Achievement GetAchievement(int id)
+    {
+        _achievementTable.TryGetValue(id, out var achievement);
+        return achievement;
+    }
+
+    public IEnumerable<Achievement> GetAchievements()
+    {
+        return _achievementTable.Values;
+    }
+
+    public CompleteBook GetCompleteBook(int id)
+    {
+        _completeBookTable.TryGetValue(id, out var completeBook);
+        return completeBook;
+    }
+    
+    public IEnumerable<CompleteBook> GetCompleteBooks()
+    {
+        return _completeBookTable.Values;
     }
 }
