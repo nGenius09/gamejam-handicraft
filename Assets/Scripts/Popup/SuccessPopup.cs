@@ -15,10 +15,10 @@ public class SuccessPopup : FinishActionPopup
     {
         base.Show();
 
-        var id = Random.Range(1, 6);
+        var id = Mathf.Clamp(AccountManager.Instance.gamePoint / 10 + 1, 1, 6);
 
         image.sprite = atlas.GetSprite($"Result{id}");
-        comment.text = $"{id}";
+        comment.text = DataManager.Instance.GetCompleteBook(id).Txt;
         
         AccountManager.Instance.AddCollection(id);
     }

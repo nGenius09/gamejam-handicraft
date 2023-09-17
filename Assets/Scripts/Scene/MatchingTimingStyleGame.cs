@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -23,18 +24,18 @@ public class MatchingTimingStyleGame : TimingStyleGame
     {
         base.StartGame();
 
-        baseLineY = Random.Range(lineMin, lineMax);
+        baseLineY = UnityEngine.Random.Range(lineMin, lineMax);
         line.localPosition = new Vector3(0, baseLineY, 0);
         blockSpeeds = new float[blocks.Length];
         for (int i = 0; i < blocks.Length; i++)
         {
             var pos = blocks[i].localPosition;
-            pos.y = Random.Range(lineMin, lineMax);
+            pos.y = UnityEngine.Random.Range(lineMin, lineMax);
             blocks[i].localPosition = pos;
-            blockSpeeds[i] = Random.Range(speedMin, speedMax);
+            blockSpeeds[i] = UnityEngine.Random.Range(speedMin, speedMax);
 
             var sprite = blocks[i].GetComponent<SpriteRenderer>();
-            sprite.sprite = atlas.GetSprite($"{Random.Range(0, 61):D2}");
+            sprite.sprite = atlas.GetSprite($"{UnityEngine.Random.Range(0, 61):D2}");
         }
     }
 
@@ -84,6 +85,14 @@ public class MatchingTimingStyleGame : TimingStyleGame
         {
             FinishGame(IsAllSuccess());
         }
+    }
+
+    protected override int GetResult()
+    {
+        float rate = 0;
+        for (int i = 0; i < blocks.Length; ++i)
+            rate += Mathf.Abs(blocks[i].localPosition.y - baseLineY);
+        return (int)((limitTime - gameTime + _curGameData.Score) * (1.0f - rate/7));
     }
 
     private bool IsSuccess(int index)
