@@ -64,20 +64,20 @@ public class BookLoad
 }
 
 [Serializable]
-public struct Achive
+public struct Achievement
 {
     public int Id;
     public string Txt;
 }
 
 [Serializable]
-public class AchiveLoad
+public class AchievementLoad
 {
-    public List<Achive> data2;
+    public List<Achievement> data2;
 
-    public void Load(out Dictionary<int, Achive> dic)
+    public void Load(out Dictionary<int, Achievement> dic)
     {
-        dic = new Dictionary<int, Achive>();
+        dic = new Dictionary<int, Achievement>();
         for (int i = 0; i < data2.Count; ++i)
             dic.Add(data2[i].Id, data2[i]);
     }

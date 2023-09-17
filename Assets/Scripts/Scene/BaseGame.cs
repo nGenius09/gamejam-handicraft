@@ -27,7 +27,7 @@ public abstract class BaseGame : MonoBehaviour
         {
             int datanumber = AccountManager.Instance.collections.Count > 5 ?
         UnityEngine.Random.Range(0, 6) : AccountManager.Instance.collections.Count;
-            _curGameData = DataManager.Instance.DataTable[datanumber * 3 + (int)(gameMode) - 1];
+            _curGameData = DataManager.Instance.GetData(datanumber * 3 + (int)(gameMode) - 1);
             limitTime = _curGameData.TimeLimit;
         }
     }

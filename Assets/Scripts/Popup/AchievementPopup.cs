@@ -3,14 +3,19 @@ using UnityEngine.U2D;
 
 public class AchievementPopup : BasePopup
 {
+    [SerializeField] private AchievementSlot[] achievementSlots;
     public override void Show()
     {
         base.Show();
-        
-        // var achievements = AccountManager.Instance.achievements;
-        // for (int i = 0; i < this.achievementObjects.Length; i++)
-        // {
-        //     this.achievementObjects[i].SetActive(i < achievements.Count);
-        // }
+
+        int index = 0;
+        foreach (var achievement in DataManager.Instance.GetAchievements())
+        {
+            if (index < achievementSlots.Length)
+            {
+                achievementSlots[index].Setup(achievement.Id, achievement.Txt);
+                index++;
+            }
+        }
     }
 }
