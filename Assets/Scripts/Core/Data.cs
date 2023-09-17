@@ -82,3 +82,22 @@ public class AchievementLoad
             dic.Add(data2[i].Id, data2[i]);
     }
 }
+
+public class Collection 
+{
+    public CompleteBook Book;
+    public int[] Numbers = new int[7];
+    public float[] YValues = new float[7];
+
+    public Collection()
+    {
+
+    }
+
+    public Collection(CompleteBook book, int[] nums, float[] y) 
+    {
+        Book = book;
+        Numbers = nums;
+        YValues = y;
+    }
+}

@@ -23,6 +23,8 @@ public class MatchingTimingStyleGame : TimingStyleGame
     private float baseLineY;
     private float[] blockSpeeds;
     private int blockIndex;
+    private int[] spriteIndex = new int[7];
+
     protected override void StartGame()
     {
         base.StartGame();
@@ -122,5 +124,11 @@ public class MatchingTimingStyleGame : TimingStyleGame
         }
 
         return failCount < life;
+    }
+
+    protected override void FinishGame(bool bSuccess = true)
+    {
+        AccountManager.Instance.SetCollection();
+        base.FinishGame(bSuccess);
     }
 }
