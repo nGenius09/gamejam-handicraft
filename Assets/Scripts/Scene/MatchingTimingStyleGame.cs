@@ -25,6 +25,9 @@ public class MatchingTimingStyleGame : TimingStyleGame
     private float baseLineY;
     private float[] blockSpeeds;
     private int blockIndex;
+    private int[] spriteIndex = new int[7];
+    private float[] blockY = new float[7];
+
     protected override void StartGame()
     {
         base.StartGame();
@@ -40,7 +43,8 @@ public class MatchingTimingStyleGame : TimingStyleGame
             blockSpeeds[i] = UnityEngine.Random.Range(speedMin, speedMax);
 
             var sprite = blocks[i].GetComponent<SpriteRenderer>();
-            sprite.sprite = atlas.GetSprite($"{UnityEngine.Random.Range(0, 61):D2}");
+            spriteIndex[i] = UnityEngine.Random.Range(1, 61);
+            sprite.sprite = atlas.GetSprite($"{spriteIndex[i]:D2}");
         }
     }
 
@@ -70,6 +74,7 @@ public class MatchingTimingStyleGame : TimingStyleGame
             
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                SoundManager.Instance.Play2DSound(SFX.Hammer);
                 StopAndCheckTiming();
             }
         }
@@ -110,6 +115,7 @@ public class MatchingTimingStyleGame : TimingStyleGame
 
     private bool IsSuccess(int index)
     {
+        blockY[index] = blocks[index].localPosition.y;
         return Mathf.Abs(blocks[index].localPosition.y - baseLineY) <= cutline;
     }
 
@@ -125,5 +131,11 @@ public class MatchingTimingStyleGame : TimingStyleGame
         }
 
         return failCount < life;
+    }
+
+    protected override void FinishGame(bool bSuccess = true)
+    {
+        AccountManager.Instance.SetCollection(spriteIndex, blockY);
+        base.FinishGame(bSuccess);
     }
 }
