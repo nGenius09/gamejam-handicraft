@@ -22,6 +22,7 @@ public class FluidTimingStyleGame : TimingStyleGame
     private bool pressSpace;
 
     public GameObject SpaceObj;
+    private CAudio _audio;
 
     protected override void StartGame()
     {
@@ -34,11 +35,18 @@ public class FluidTimingStyleGame : TimingStyleGame
         var posMax = lineMax.localPosition;
         posMax.y = maxPercent * 0.01f * (lineMaxY - lineMinY) + lineMinY;
         lineMax.localPosition = posMax;
+        _audio = new CAudio(GetComponent<AudioSource>(), Sound.Effect);
     }
 
     protected override int GetResult()
     {
         return _curGameData.Score + particles.Count / 90;
+    }
+
+    protected override void FinishGame(bool bSuccess = true)
+    {
+        _audio.Clear();
+        base.FinishGame(bSuccess);
     }
 
     protected override bool UpdateGame()
@@ -55,7 +63,7 @@ public class FluidTimingStyleGame : TimingStyleGame
                     SpawnParticle();
                     deltaTime -= 0.01f;
                 }
-                
+                _audio.PlaySound(SoundManager.Instance.SFXs[SFX.Magma], Sound.Bgm);
                 speed += Random.Range(0, 5) * Time.deltaTime;
             }
             else if (Input.GetKeyUp(KeyCode.Space))

@@ -39,9 +39,12 @@ public abstract class BaseGame : MonoBehaviour
         if (bSuccess)
         {
             AccountManager.Instance.AddGamePoint(GetResult());
-            Debug.Log(AccountManager.Instance.gamePoint);
+            SoundManager.Instance.Play2DSound(SFX.Success);
         }
-        
+
+        else
+            SoundManager.Instance.Play2DSound(SFX.Fail);
+
         GameManager.Instance.OnFinishGame?.Invoke(bSuccess, gameMode, nextMode);
     }
 

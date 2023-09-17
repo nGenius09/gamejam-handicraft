@@ -228,7 +228,6 @@ public class CarveGameScene : BaseGame
                     ++_stringPointer;
                     ++_combo;
                     _curComboTime = ComboTime;
-                    SoundManager.Instance.Play2DSound(SFX.Shave);
                     
                     if (_combo == 5)
                     {
