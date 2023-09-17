@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup canvasGroup;
+    
     [SerializeField] private SettingPopup settingPopup;
     [SerializeField] private SuccessPopup successPopup;
     [SerializeField] private FailPopup failPopup;
@@ -76,7 +79,7 @@ public class Lobby : MonoBehaviour
 
     private void RefreshRewardObjects()
     {
-        var completeBookCount = DataManager.Instance.GetCompleteBooks().Count();
+        var completeBookCount = 6;//DataManager.Instance.GetCompleteBooks().Count();
 
         var achievements = AccountManager.Instance.achievements;
         for (int i = 0; i < this.achievementObjects.Length; i++)
@@ -98,9 +101,9 @@ public class Lobby : MonoBehaviour
 
     private void Update()
     {
-        // var isOpen = SceneManager.sceneCount > 1;
-        // startBtn.gameObject.SetActive(isOpen == false);
-        // collectionBtn.gameObject.SetActive(isOpen == false);
+        var isLoadedGame = SceneManager.sceneCount > 1;
+        canvasGroup.interactable = !isLoadedGame;
+        canvasGroup.blocksRaycasts = !isLoadedGame;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

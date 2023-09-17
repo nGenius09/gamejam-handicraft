@@ -8135,6 +8135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efdcba7c97024c5cbc996984c539bc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 1526062480}
   settingPopup: {fileID: 297977022}
   successPopup: {fileID: 1275435520}
   failPopup: {fileID: 1964452991}
@@ -8941,6 +8942,7 @@ GameObject:
   - component: {fileID: 1526062478}
   - component: {fileID: 1526062477}
   - component: {fileID: 1526062476}
+  - component: {fileID: 1526062480}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -9031,6 +9033,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &1526062480
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526062475}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1534841794
 GameObject:
   m_ObjectHideFlags: 0
