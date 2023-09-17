@@ -58,7 +58,7 @@ public class SoundManager
 
     public void Play2DSound(SFX type)
     {
-        AudioSource.PlayClipAtPoint(_sfxs[type], Vector3.zero);
+        AudioSource.PlayClipAtPoint(_sfxs[type], Vector3.zero, Volume.Effect);
     }
 
     public void Play2DSound(AudioClip clip)
