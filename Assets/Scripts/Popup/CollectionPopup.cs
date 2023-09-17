@@ -8,6 +8,8 @@ public class CollectionPopup : BasePopup
     [SerializeField] private SpriteAtlas atlas;
     [SerializeField] private GameObject bookSlotObj;
     [SerializeField] private RectTransform pivot;
+    
+    [SerializeField] private BookPopup bookPopup;
 
     private List<BookSlot> bookSlots = new List<BookSlot>();
 
@@ -22,6 +24,7 @@ public class CollectionPopup : BasePopup
             {
                 var obj = Instantiate(bookSlotObj, pivot);
                 var slot = obj.GetComponent<BookSlot>();
+                slot.SetClickAction(OnClickBook);
                 bookSlots.Add(slot);
             }
             
@@ -33,5 +36,21 @@ public class CollectionPopup : BasePopup
         {
             bookSlots[i].gameObject.SetActive(false);
         }
+    }
+    
+    public void OnClickBook()
+    {
+        bookPopup.Show();
+    }
+
+    public override void OnClickClose()
+    {
+        if (bookPopup.IsActive())
+        {
+            bookPopup.OnClickClose();
+            return;
+        }
+        
+        base.OnClickClose();
     }
 }
