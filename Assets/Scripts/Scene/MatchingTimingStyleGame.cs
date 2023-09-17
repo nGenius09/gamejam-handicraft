@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.U2D;
 
 public class MatchingTimingStyleGame : TimingStyleGame
@@ -19,11 +20,13 @@ public class MatchingTimingStyleGame : TimingStyleGame
     
     [SerializeField] private GameObject[] lifeObjects;
     [SerializeField] private int life;
+    [FormerlySerializedAs("lifeCount")] [SerializeField] private int decreaseLifeCount;
 
     private float baseLineY;
     private float[] blockSpeeds;
     private int blockIndex;
     private int[] spriteIndex = new int[7];
+    private float[] blockY = new float[7];
 
     protected override void StartGame()
     {
@@ -40,7 +43,8 @@ public class MatchingTimingStyleGame : TimingStyleGame
             blockSpeeds[i] = UnityEngine.Random.Range(speedMin, speedMax);
 
             var sprite = blocks[i].GetComponent<SpriteRenderer>();
-            sprite.sprite = atlas.GetSprite($"{UnityEngine.Random.Range(0, 61):D2}");
+            spriteIndex[i] = UnityEngine.Random.Range(1, 61);
+            sprite.sprite = atlas.GetSprite($"{spriteIndex[i]:D2}");
         }
     }
 
@@ -85,9 +89,10 @@ public class MatchingTimingStyleGame : TimingStyleGame
         {
             blocks[blockIndex].GetComponent<SpriteRenderer>().color = Color.gray;
 
-            if (blockIndex < lifeObjects.Length)
+            if (decreaseLifeCount < lifeObjects.Length)
             {
-                lifeObjects[blockIndex].SetActive(false);
+                lifeObjects[decreaseLifeCount].SetActive(false);
+                decreaseLifeCount++;
             }
         }
         
@@ -109,6 +114,7 @@ public class MatchingTimingStyleGame : TimingStyleGame
 
     private bool IsSuccess(int index)
     {
+        blockY[index] = blocks[index].localPosition.y;
         return Mathf.Abs(blocks[index].localPosition.y - baseLineY) <= cutline;
     }
 
@@ -128,7 +134,7 @@ public class MatchingTimingStyleGame : TimingStyleGame
 
     protected override void FinishGame(bool bSuccess = true)
     {
-        AccountManager.Instance.SetCollection();
+        AccountManager.Instance.SetCollection(spriteIndex, blockY);
         base.FinishGame(bSuccess);
     }
 }

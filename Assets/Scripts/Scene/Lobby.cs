@@ -81,12 +81,12 @@ public class Lobby : MonoBehaviour
     {
         var completeBookCount = 6;//DataManager.Instance.GetCompleteBooks().Count();
 
-        var achievements = AccountManager.Instance.achievements;
-        for (int i = 0; i < this.achievementObjects.Length; i++)
-        {
-            this.achievementObjects[i].SetActive((i == 1 || i == 3 || i == 5));
-}
-        
+        // var achievements = AccountManager.Instance.achievements;
+        // for (int i = 0; i < this.achievementObjects.Length; i++)
+        // {
+        //     this.achievementObjects[i].SetActive((i == 1 || i == 3 || i == 5));
+        // }
+
         var collections = AccountManager.Instance.collections;
         for (int i = 0; i < this.collectionObjects.Length; i++)
         {
@@ -95,7 +95,11 @@ public class Lobby : MonoBehaviour
 
         collectionCount.text = $"{collections.Count}/{completeBookCount}";
 
-        normalCraftEnter = collections.Count != completeBookCount;
+        this.achievementObjects[0].SetActive(collections.Count >= 1);
+        this.achievementObjects[1].SetActive(collections.Count >= 3);
+        this.achievementObjects[2].SetActive(collections.Count >= 6);
+
+        normalCraftEnter = collections.Count != completeBookCount || AccountManager.Instance.hasEnding;
         craftTitle.sprite = normalCraftEnter ? craftSprite : endingSprite;
     }
 
