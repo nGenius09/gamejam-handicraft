@@ -44,6 +44,8 @@ public class CarveGameScene : BaseGame
     private Image _fever;
     [SerializeField]
     private RectTransform _feverRect;
+    [SerializeField]
+    private RectTransform _feverRectText;
     private Sequence _feverSeq;
     [SerializeField]
     private RectTransform _feverLetter;
@@ -79,7 +81,6 @@ public class CarveGameScene : BaseGame
         _curGameData = DataManager.Instance.DataTable[datanumber * 3];
         Divide_Letter(new StringBuilder(_curGameData.Letter));
         CheckDuplicate(_curGameData.LetterLength, _curGameData.LetterTypeCount);
-        limitTime = _curGameData.TimeLimit;
         _appearLetterSearchChar.Clear();
         MakeKeyCodeNCharTable();
         _textPool.Init();
@@ -88,6 +89,7 @@ public class CarveGameScene : BaseGame
         _feverSeq = DOTween.Sequence()
                 .AppendCallback(() => _fever.gameObject.SetActive(true))
                 .Append(_feverRect.DOScale(new Vector3(1.2f, 1.2f, 1), 0.25f))
+                .Join(_feverRectText.DOScale(new Vector3(1.2f, 1.2f, 1), 0.25f))
                 .Join(_fever.DOColor(Color.white, 0.25f))
                 .SetAutoKill(false)
                 .Pause();
@@ -205,6 +207,7 @@ public class CarveGameScene : BaseGame
         {
             _feverSeq.Pause();
             _feverRect.localScale = new Vector3(1, 1, 1);
+            _feverRectText.localScale = new Vector3(1, 1, 1);
             _fever.gameObject.SetActive(false);
             BgmPlayer.Bgm.BgmTrigger(null, 1);
         }

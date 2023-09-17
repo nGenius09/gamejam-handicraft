@@ -38,7 +38,7 @@ public class FluidTimingStyleGame : TimingStyleGame
 
     protected override int GetResult()
     {
-        return particles.Count;
+        return _curGameData.Score + particles.Count / 90;
     }
 
     protected override bool UpdateGame()
