@@ -74,6 +74,7 @@ public class MatchingTimingStyleGame : TimingStyleGame
             
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                SoundManager.Instance.Play2DSound(SFX.Hammer);
                 StopAndCheckTiming();
             }
         }
